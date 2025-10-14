@@ -20,9 +20,45 @@ public class Formula {
     }
 
     private void requireNonBlankInput(String rawInput) {
-        if (rawInput == null || rawInput.isEmpty()) {
+        if (rawInput == null || rawInput.isBlank()) {
             throw new IllegalArgumentException("입력 값이 비어 있습니다.");
         }
+    }
+
+    public String getActualFormula() {
+        if(hasCustomDelimiter(rawInput)) {
+            return extractActualFormulaSection();
+        }
+        return rawInput;
+    }
+
+    private String extractActualFormulaSection() {
+        int startIndex = customDelimiterSectionSize();
+        int endIndex = rawInput.length();
+
+        return rawInput.substring(startIndex, endIndex);
+    }
+
+    public String getCustomDelimiterCandidate() {
+        if(hasCustomDelimiter(rawInput)) {
+            String delimiterCandidate = removeBracketsTo(rawInput);
+            requireCorrectDelimiterLength(delimiterCandidate);
+            return delimiterCandidate;
+        }
+        return null;
+    }
+
+    private void requireCorrectDelimiterLength(String delimiterCandidate) {
+        if(delimiterCandidate.length() != CUSTOM_DELIMITER_ELEMENT_LENGTH) {
+            throw new IllegalArgumentException("커스텀 구분자의 길이가 맞지 않습니다.");
+        }
+    }
+
+    private String removeBracketsTo(String section) {
+        int startIndex = LEFT_BRACKET.length();
+        int endIndex = customDelimiterSectionSize() - RIGHT_BRACKET.length();
+
+        return section.substring(startIndex, endIndex);
     }
 
     private boolean hasCustomDelimiter(String rawInput) {
