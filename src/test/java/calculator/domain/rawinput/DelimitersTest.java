@@ -24,12 +24,21 @@ class DelimitersTest {
     @Test
     @DisplayName("커스텀_구분자를_추가할_수_있다.")
     void addCustomDelimiter() {
-        Delimiters delimiters = Delimiters.defaults();
         String customDelimiter = "/";
-
+        Delimiters delimiters = Delimiters.defaults();
         delimiters = delimiters.withCustom(customDelimiter);
+
         boolean delimitersContainCustomDelimiter = delimiters.has(customDelimiter);
 
         assertTrue(delimitersContainCustomDelimiter);
+    }
+
+    @Test
+    @DisplayName("구분자는_숫자가_아니어야_한다.")
+    void numericDelimiter() {
+        String customDelimiter = "1";
+        Delimiters delimiters = Delimiters.defaults();
+
+        assertThrows(IllegalArgumentException.class, () -> delimiters.withCustom(customDelimiter));
     }
 }
