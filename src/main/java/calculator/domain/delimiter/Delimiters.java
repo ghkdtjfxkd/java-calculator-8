@@ -23,8 +23,12 @@ public class Delimiters {
         return new Delimiters();
     }
 
-    public static Delimiters withCustom(String customDelimiter) {
+    public Delimiters withCustom(String customDelimiter) {
         return new Delimiters(customDelimiter);
+    }
+
+    public boolean has(String delimiter) {
+        return this.delimiters.contains(delimiter);
     }
 
     private enum DefaultDelimiter {
