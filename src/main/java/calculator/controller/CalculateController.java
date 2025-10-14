@@ -18,7 +18,6 @@ public class CalculateController {
     }
 
     private CalculationRequest request() {
-        String userInput = InputView.read();
-        return CalculationRequest.of(userInput);
+        return InputView.request();
     }
 }

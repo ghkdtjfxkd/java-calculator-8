@@ -2,6 +2,7 @@ package calculator.io;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import calculator.dto.CalculationRequest;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -33,15 +34,15 @@ class InputTest {
     }
 
     @Test
-    @DisplayName("사용자가_입력한_문자열과_입력받은_값은_같아야_한다.")
+    @DisplayName("사용자가_입력한_요청과_전달된_값은_같아야_한다.")
     void correctInput() {
         String provided = "1,2";
         String simulatedInput = provided + System.lineSeparator();
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-        String actual = InputView.read();
+        CalculationRequest request = InputView.request();
 
-        assertEquals(provided, actual);
+        assertEquals(provided, request.input());
     }
 
     @Test
@@ -51,9 +52,9 @@ class InputTest {
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         System.setIn(inputStream);
 
-        InputView.read();
+        InputView.request();
         InputView.close();
 
-        assertThrowsExactly(NoSuchElementException.class, InputView::read);
+        assertThrowsExactly(NoSuchElementException.class, InputView::request);
     }
 }
