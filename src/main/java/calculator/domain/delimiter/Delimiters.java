@@ -1,6 +1,7 @@
 package calculator.domain.delimiter;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,8 +13,18 @@ public class Delimiters {
         this.delimiters = Set.copyOf(DefaultDelimiter.getDelimiters());
     }
 
+    private Delimiters(String customDelimiter) {
+        Set<String> delimiters = new HashSet<>(DefaultDelimiter.getDelimiters());
+        delimiters.add(customDelimiter);
+        this.delimiters = Set.copyOf(delimiters);
+    }
+
     public static Delimiters defaults() {
         return new Delimiters();
+    }
+
+    public static Delimiters withCustom(String customDelimiter) {
+        return new Delimiters(customDelimiter);
     }
 
     private enum DefaultDelimiter {
