@@ -11,7 +11,7 @@ public class Formula {
     private final String rawInput;
 
     private Formula(String rawInput) {
-        requireNonBlankInput(rawInput);
+        requireNonNullInput(rawInput);
         this.rawInput = rawInput;
     }
 
@@ -19,9 +19,9 @@ public class Formula {
         return new Formula(input);
     }
 
-    private void requireNonBlankInput(String rawInput) {
-        if (rawInput == null || rawInput.isBlank()) {
-            throw new IllegalArgumentException("입력 값이 비어 있습니다.");
+    private void requireNonNullInput(String rawInput) {
+        if (rawInput == null) {
+            throw new IllegalArgumentException("입력 값이 Null 입니다.");
         }
     }
 

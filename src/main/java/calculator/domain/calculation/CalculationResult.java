@@ -1,7 +1,5 @@
 package calculator.domain.calculation;
 
-import calculator.domain.tokenizing.Operand;
-import calculator.domain.tokenizing.Operator;
 import java.math.BigInteger;
 
 public class CalculationResult {

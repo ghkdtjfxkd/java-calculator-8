@@ -13,13 +13,6 @@ class FormulaTest {
     private final String actualFormula = "1,2,3";
 
     @Test
-    @DisplayName("사용자의_입력이_비어_있다면_예외를_발생시킨다.")
-    void userInputIsBlankOrNull() {
-        String input = "";
-        assertThrows(IllegalArgumentException.class,  () -> Formula.from(input));
-    }
-
-    @Test
     @DisplayName("사용자의_입력이_null_이라면_예외를_발생시킨다.")
     void userInputIsNull() {
         String input = null;
@@ -72,6 +65,4 @@ class FormulaTest {
 
         assertNull(actual);
     }
-
-
 }
