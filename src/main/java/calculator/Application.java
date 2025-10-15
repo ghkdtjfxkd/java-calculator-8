@@ -9,5 +9,6 @@ public class Application {
         // TODO: 프로그램 구현
         CalculateService calculateService = new CalculateServiceImpl();
         CalculateController controller = CalculateController.getInstance(calculateService);
+        controller.run();
     }
 }
