@@ -19,23 +19,23 @@ public class Calculation {
         return new Calculation(parseToQueue(tokens));
     }
 
-    public BigInteger calculate(Stream<CalculationElement> tokens) {
-        CalculationResult calculationResult = CalculationResult.of(BigInteger.ZERO);
+    public BigInteger calculate() {
+        CalculationResult result = CalculationResult.of(BigInteger.ZERO);
 
         if (elements.isEmpty()) {
-            return calculationResult.getValue();
+            return result.getValue();
         }
 
-        CalculationResult result = getFirstOperand();
-        CalculationElement previous = createDummyOperand();
+        result = getFirstOperand();
+//        CalculationElement previous = createDummyOperand();
 
         while (hasMoreElements()) {
             CalculationElement current = elements.poll();
-            result = processElement(current, result); // CalculationResult 반환
-            previous = current;
+            result = processElement(current, result);
+//            previous = current;
         }
 
-        return calculationResult.getValue();
+        return result.getValue();
     }
 
     private CalculationResult processElement(CalculationElement current, CalculationResult calculationResult) {
@@ -47,7 +47,6 @@ public class Calculation {
 
     private CalculationResult processOperator(CalculationResult calculationResult) {
         validateHasNextOperand();
-
         CalculationElement nextElement = getNextElement();
         validateIsOperand(nextElement);
 
@@ -78,15 +77,21 @@ public class Calculation {
 
     private CalculationResult getFirstOperand() {
         CalculationElement first = elements.poll();
-        validateIsOperand(first);
+        requireFirstCalculationElementIsOperand(first);
 
         BigInteger value = ((Operand) first).getValue();
         return CalculationResult.of(value);
     }
 
-    private void validateIsOperand(CalculationElement element) {
+    private void requireFirstCalculationElementIsOperand(CalculationElement element) {
         if(element == null || !element.isOperand()) {
             throw new IllegalArgumentException("계산식은 숫자로 시작해야 한다.");
+        }
+    }
+
+    private void validateIsOperand(CalculationElement element) {
+        if(!element.isOperand()) {
+            throw new IllegalArgumentException("피연산자 다음에는 연산자가 와야한다.");
         }
     }
 

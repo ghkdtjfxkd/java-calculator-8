@@ -42,6 +42,6 @@ public class CalculateServiceImpl implements CalculateService {
     private BigInteger calculateFrom(Stream<CalculationElement> tokens) {
         Calculation calculation =  Calculation.from(tokens);
 
-        return calculation.calculate(tokens);
+        return calculation.calculate();
     }
 }
