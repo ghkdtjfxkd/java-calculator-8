@@ -1,4 +1,4 @@
-package calculator.domain.rawinput;
+package calculator.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,8 +15,8 @@ class DelimitersTest {
         String comma = ",";
         String colon = ":";
 
-        boolean defaultDelimitersContainComma = defaults.has(comma);
-        boolean defaultDelimitersContainColon = defaults.has(colon);
+        boolean defaultDelimitersContainComma = defaults.has(comma.charAt(0));
+        boolean defaultDelimitersContainColon = defaults.has(colon.charAt(0));
 
         assertTrue(defaultDelimitersContainComma && defaultDelimitersContainColon);
     }
@@ -28,7 +28,7 @@ class DelimitersTest {
         Delimiters delimiters = Delimiters.defaults();
         delimiters = delimiters.withCustom(customDelimiter);
 
-        boolean delimitersContainCustomDelimiter = delimiters.has(customDelimiter);
+        boolean delimitersContainCustomDelimiter = delimiters.has(customDelimiter.charAt(0));
 
         assertTrue(delimitersContainCustomDelimiter);
     }
