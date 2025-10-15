@@ -3,6 +3,7 @@ package calculator.controller;
 import calculator.dto.CalculationRequest;
 import calculator.dto.CalculationResponse;
 import calculator.io.InputView;
+import calculator.io.OutputView;
 import calculator.service.CalculateService;
 
 public class CalculateController {
@@ -17,7 +18,12 @@ public class CalculateController {
         return new CalculateController(calculateService);
     }
 
-    private CalculationResponse calculate() {
+    public void run() {
+        OutputView.print(calculateResult());
+        InputView.close();
+    }
+
+    private CalculationResponse calculateResult() {
         return calculateService.calculate(request());
     }
 
