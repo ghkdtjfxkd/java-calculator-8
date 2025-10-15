@@ -39,7 +39,7 @@
 - [ ] OutputView 테스트 코드 작성하기
 
 ## 리팩토링
-- [ ] Operator를 VO로 리팩토링하기
+- [x] Operator를 VO로 리팩토링하기
 - [ ] 내부 enum 클래스 리팩토링하기
 
 ## 추가 구현

@@ -1,15 +1,9 @@
 package calculator.domain.tokenizing;
 
-import java.math.BigInteger;
-import java.util.function.BinaryOperator;
-
 public class Operator extends CalculationElement {
-
-    private final Operation operation;
 
     private Operator(String value) {
         super(value);
-        this.operation = Operation.PLUS;
     }
 
     @Override
@@ -30,23 +24,5 @@ public class Operator extends CalculationElement {
 
     private static boolean isContainNumericSource(String value) {
         return value.chars().anyMatch(Character::isDigit);
-    }
-
-    public BigInteger operate(BigInteger left, BigInteger right) {
-        return operation.operate(left, right);
-    }
-
-    private enum Operation {
-        PLUS(BigInteger::add);
-
-        private final BinaryOperator<BigInteger> op;
-
-        Operation(BinaryOperator<BigInteger> op) {
-            this.op = op;
-        }
-
-        public BigInteger operate(BigInteger left, BigInteger right) {
-            return op.apply(left, right);
-        }
     }
 }
