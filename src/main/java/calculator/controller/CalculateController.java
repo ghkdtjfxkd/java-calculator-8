@@ -13,6 +13,10 @@ public class CalculateController {
         this.calculateService = calculateService;
     }
 
+    public static CalculateController getInstance(CalculateService calculateService){
+        return new CalculateController(calculateService);
+    }
+
     private CalculationResponse calculate() {
         return calculateService.calculate(request());
     }
