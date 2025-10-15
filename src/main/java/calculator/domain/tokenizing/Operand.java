@@ -16,6 +16,10 @@ public class Operand extends CalculationElement {
         return ElementType.OPERAND;
     }
 
+    public BigInteger getValue() {
+        return operand;
+    }
+
     public static Operand valueOf(String value) {
         return new Operand(value);
     }
