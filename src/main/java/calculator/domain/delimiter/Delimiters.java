@@ -28,8 +28,8 @@ public class Delimiters {
         return new Delimiters(customDelimiter);
     }
 
-    public boolean has(String delimiter) {
-        return this.delimiters.contains(delimiter);
+    public boolean has(char delimiter) {
+        return this.delimiters.contains(String.valueOf(delimiter));
     }
 
     private void requireNonNumerical(String delimiter) {
