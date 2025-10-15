@@ -14,13 +14,21 @@ public abstract class CalculationElement {
         return Operator.of(value);
     }
 
-    protected abstract ElementType getType();
+    public abstract ElementType getType();
+
+    public boolean isOperand() {
+        return getType() == ElementType.OPERAND;
+    }
+
+    public boolean isOperator() {
+        return getType() == ElementType.OPERATOR;
+    }
 
     private static boolean isNumeric(String value) {
         return value.chars().allMatch(Character::isDigit);
     }
 
-    protected enum ElementType {
+    public enum ElementType {
         OPERAND, OPERATOR
     }
 }
