@@ -24,54 +24,45 @@ public class CustomDelimiterSection {
             return null;
         }
         int startIndex = 0;
-        int endIndex = customDelimiterSectionSize();
+        int endIndex = specifiedCustomDelimiterSectionSize();
 
         return rawInput.trim().substring(startIndex, endIndex);
     }
 
     private static boolean canContainCustomDelimiterSection(String rawInput) {
-        return rawInput.length() >= customDelimiterSectionSize();
+        return rawInput.length() >= specifiedCustomDelimiterSectionSize();
     }
 
-    protected String getCustomDelimiterCandidate() {
+    String getCustomDelimiterCandidate() {
         if(hasCustomDelimiter()) {
-            String delimiterCandidate = removeBracketsTo(section);
-            requireCorrectDelimiterLength(delimiterCandidate);
-            return delimiterCandidate;
+            return removeBracketsTo(section);
         }
         return null;
     }
 
-    protected static int size() {
-        return customDelimiterSectionSize();
-    }
-
-    protected boolean hasCustomDelimiter() {
+    boolean hasCustomDelimiter() {
         if(section == null) {
             return false;
         }
         return CustomDelimiterBracket.isCovered(section);
     }
 
-
     private String removeBracketsTo(String section) {
         int startIndex = LEFT_BRACKET.length();
-        int endIndex = customDelimiterSectionSize() - RIGHT_BRACKET.length();
+        int endIndex = specifiedCustomDelimiterSectionSize() - RIGHT_BRACKET.length();
 
         return section.substring(startIndex, endIndex);
     }
 
-    private void requireCorrectDelimiterLength(String delimiterCandidate) {
-        if(delimiterCandidate.length() != CUSTOM_DELIMITER_ELEMENT_LENGTH) {
-            throw new IllegalArgumentException("커스텀 구분자의 길이가 맞지 않습니다.");
-        }
+    int specifiedLength() {
+        return specifiedCustomDelimiterSectionSize();
     }
 
-    private static int customDelimiterSectionSize() {
+    private static int specifiedCustomDelimiterSectionSize() {
         return LEFT_BRACKET.length() + CUSTOM_DELIMITER_ELEMENT_LENGTH + RIGHT_BRACKET.length();
     }
 
-    protected enum CustomDelimiterBracket {
+    enum CustomDelimiterBracket {
         LEFT_BRACKET("//"),
         RIGHT_BRACKET("\\n"); // `\` + `n` 합쳐진 문자를 의미함. `\n`은 개행문자를 의미하지 않음.
 
