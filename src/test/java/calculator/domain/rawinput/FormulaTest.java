@@ -2,62 +2,58 @@ package calculator.domain.rawinput;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import static calculator.domain.rawinput.TestElements.*;
+
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class FormulaTest {
 
-    private final String correctLeftBracket = "//";
-    private final String correctRightBracket = "\\n";
-    private final String correctCustomDelimiterCandidate  = ".";
-    private final String actualFormula = "1,2,3";
+    private static Stream<String> provideCorrectFormats() {
+        return TestcaseMethods.provideCorrectFormats();
+    }
+
+    private static Stream<String> provideWrongFormats() {
+        return TestcaseMethods.provideWrongFormats();
+    }
 
     @Test
     @DisplayName("사용자의_입력이_null_이라면_예외를_발생시킨다.")
     void userInputIsNull() {
         String input = null;
-        assertThrows(IllegalArgumentException.class,  () -> Formula.from(input));
+        assertThrows(IllegalArgumentException.class, () -> Formula.from(input));
     }
 
-    @Test
-    @DisplayName("커스텀_구분자_지정_형식이_올바르다면_계산식_추출_시_커스텀_구분자_지정_부분이_없는_문자열을_반환해야_한다.")
-    void correctCustomDelimiterFormatReturnActualFormula() {
-        String input = correctLeftBracket + correctCustomDelimiterCandidate + correctRightBracket + actualFormula;
-        Formula formula = Formula.from(input);
-
-        String expected = actualFormula;
-        String actual = formula.getActualFormula();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
+    @ParameterizedTest
+    @MethodSource("provideCorrectFormats")
     @DisplayName("커스텀_구분자_지정_형식이_올바르다면_커스텀_구분자_후보를_반환해야_한다.")
-    void correctCustomDelimiterFormat() {
-        String input = correctLeftBracket + correctCustomDelimiterCandidate + correctRightBracket;
+    void correctCustomDelimiterFormat(String input) {
         Formula formula = Formula.from(input);
 
         String actual = formula.getCustomDelimiterCandidate().orElse(null);
 
-        assertEquals(correctCustomDelimiterCandidate, actual);
+        assertEquals(CORRECT_CANDIDATE.get(), actual);
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("provideWrongFormats")
     @DisplayName("커스텀_구분자_지정_형식이_올바르지_않다면_입력된_모든_문자열을_반환해야_한다.")
-    void wrongCustomDelimiterFormatReturnRawInput() {
-        String rawInput = correctLeftBracket + correctCustomDelimiterCandidate+ actualFormula;
-        Formula formula = Formula.from(rawInput);
+    void wrongCustomDelimiterFormatReturnRawInput(String input) {
+        Formula formula = Formula.from(input);
 
-        String expected = rawInput;
         String actual = formula.getActualFormula();
 
-        assertEquals(expected, actual);
+        assertEquals(input, actual);
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("provideWrongFormats")
     @DisplayName("커스텀_구분자_지정_형식이_올바르지_않다면_커스텀_구분자_후보는_`null`_이어야_한다.")
-    void wrongCustomDelimiterFormat() {
-        Formula formula = Formula.from(actualFormula);
+    void wrongCustomDelimiterFormat(String input) {
+        Formula formula = Formula.from(input);
 
         String actual = formula.getCustomDelimiterCandidate().orElse(null);
 
