@@ -11,14 +11,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class CustomDelimiterSectionTest {
 
-    private static Stream<String> provideCorrectFormats() {
-        return TestcaseMethods.provideCorrectFormats();
-    }
-
-    private static Stream<String> provideWrongFormats() {
-        return TestcaseMethods.provideWrongFormats();
-    }
-
     @ParameterizedTest
     @MethodSource("provideCorrectFormats")
     @DisplayName("입력된 문자열이 올바른 커스텀 구분자 지정 형식으로 시작한다면, 올바른 커스텀 구분자 후보를 반환해야한다.")
@@ -39,5 +31,13 @@ class CustomDelimiterSectionTest {
         String actual = section.getCustomDelimiterCandidate();
 
         assertNull(actual);
+    }
+
+    private static Stream<String> provideCorrectFormats() {
+        return TestcaseMethods.provideCorrectFormats();
+    }
+
+    private static Stream<String> provideWrongFormats() {
+        return TestcaseMethods.provideWrongFormats();
     }
 }

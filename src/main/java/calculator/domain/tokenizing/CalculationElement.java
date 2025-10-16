@@ -1,17 +1,23 @@
 package calculator.domain.tokenizing;
 
 public abstract class CalculationElement {
+
     protected final String rawValue;
 
     protected CalculationElement(String rawValue) {
         this.rawValue = rawValue;
     }
 
-    public static CalculationElement from(String value){
-        if(isNumeric(value)){
-            return Operand.valueOf(value);
+    public static CalculationElement of(String symbol){
+        if(isNumeric(symbol)){
+            return Operand.valueOf(symbol);
         }
-        return Operator.of(value);
+        return Operator.of(symbol);
+    }
+
+    public static CalculationElement of(char charSymbol){
+        String symbol = String.valueOf(charSymbol);
+        return of(symbol);
     }
 
     public abstract ElementType getType();

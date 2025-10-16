@@ -49,10 +49,9 @@
   - [ ] CustomDelimiterSection
   - [ ] Delimiters
 - [x] 입력된 식(Raw Input) 도메인에서 커스텀 구분자 관련 책임 리팩토링 
-- [ ] 사용하지 않는 주석, 메서드 삭제하기
-  - [ ] Calculation
-- [ ] 코드 가독성 다듬기
-  - [ ] Application
+- [x] 사용하지 않는 주석, 메서드 삭제하기
+  - [x] Calculation
+- [x] 코드 가독성 다듬기
 
 ## 추가 구현
 - [ ] 커스텀 구분자에 관한 필터링 추가하기

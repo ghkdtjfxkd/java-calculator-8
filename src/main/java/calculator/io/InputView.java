@@ -17,11 +17,11 @@ public class InputView {
         return Console.readLine();
     }
 
-    private static void announceGuideMessage() {
-        System.out.println(INPUT_GUIDE_MESSAGE);
-    }
-
     public static void close() {
         Console.close();
+    }
+
+    private static void announceGuideMessage() {
+        System.out.println(INPUT_GUIDE_MESSAGE);
     }
 }

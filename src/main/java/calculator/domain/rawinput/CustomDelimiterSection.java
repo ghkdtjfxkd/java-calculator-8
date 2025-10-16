@@ -19,20 +19,6 @@ public class CustomDelimiterSection {
         return new CustomDelimiterSection(section);
     }
 
-    private static String extractSectionFrom(String rawInput) {
-        if(!canContainCustomDelimiterSection(rawInput)) {
-            return null;
-        }
-        int startIndex = 0;
-        int endIndex = specifiedCustomDelimiterSectionSize();
-
-        return rawInput.trim().substring(startIndex, endIndex);
-    }
-
-    private static boolean canContainCustomDelimiterSection(String rawInput) {
-        return rawInput.length() >= specifiedCustomDelimiterSectionSize();
-    }
-
     String getCustomDelimiterCandidate() {
         if(hasCustomDelimiter()) {
             return removeBracketsTo(section);
@@ -47,6 +33,10 @@ public class CustomDelimiterSection {
         return CustomDelimiterBracket.isCovered(section);
     }
 
+    int specifiedLength() {
+        return specifiedCustomDelimiterSectionSize();
+    }
+
     private String removeBracketsTo(String section) {
         int startIndex = LEFT_BRACKET.length();
         int endIndex = specifiedCustomDelimiterSectionSize() - RIGHT_BRACKET.length();
@@ -54,8 +44,18 @@ public class CustomDelimiterSection {
         return section.substring(startIndex, endIndex);
     }
 
-    int specifiedLength() {
-        return specifiedCustomDelimiterSectionSize();
+    private static String extractSectionFrom(String rawInput) {
+        if(!canContainCustomDelimiterSection(rawInput)) {
+            return null;
+        }
+        int startIndex = 0;
+        int endIndex = specifiedCustomDelimiterSectionSize();
+
+        return rawInput.trim().substring(startIndex, endIndex);
+    }
+
+    private static boolean canContainCustomDelimiterSection(String rawInput) {
+        return rawInput.length() >= specifiedCustomDelimiterSectionSize();
     }
 
     private static int specifiedCustomDelimiterSectionSize() {

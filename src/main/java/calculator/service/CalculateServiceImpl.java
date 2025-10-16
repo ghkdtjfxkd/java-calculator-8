@@ -15,19 +15,18 @@ public class CalculateServiceImpl implements CalculateService {
     @Override
     public CalculationResponse calculate(CalculationRequest request) {
         Formula formula = Formula.from(request.input());
-        Stream<CalculationElement> tokens = tokenize(formula);
-        BigInteger result = calculateFrom(tokens);
+        Stream<CalculationElement> tokens = tokenized(formula);
+        BigInteger result = calculate(tokens);
 
         return CalculationResponse.from(result.toString());
     }
 
-    private Stream<CalculationElement> tokenize(Formula formula) {
+    private Stream<CalculationElement> tokenized(Formula formula) {
         Delimiters delimiters = defineDelimitersWith(formula);
         String actualFormula = formula.getActualFormula();
 
-        Tokens tokens = Tokens.of(actualFormula, delimiters);
-
-        return tokens.stream();
+        Tokens tokens = Tokens.from(actualFormula, delimiters);
+        return tokens.getTokensStream();
     }
 
     private Delimiters defineDelimitersWith(Formula formula) {
@@ -36,9 +35,8 @@ public class CalculateServiceImpl implements CalculateService {
                 .orElseGet(Delimiters::defaults);
     }
 
-    private BigInteger calculateFrom(Stream<CalculationElement> tokens) {
+    private BigInteger calculate(Stream<CalculationElement> tokens) {
         Calculation calculation =  Calculation.from(tokens);
-
         return calculation.calculate();
     }
 }

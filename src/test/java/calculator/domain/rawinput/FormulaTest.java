@@ -12,14 +12,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class FormulaTest {
 
-    private static Stream<String> provideCorrectFormats() {
-        return TestcaseMethods.provideCorrectFormats();
-    }
-
-    private static Stream<String> provideWrongFormats() {
-        return TestcaseMethods.provideWrongFormats();
-    }
-
     @Test
     @DisplayName("사용자의_입력이_null_이라면_예외를_발생시킨다.")
     void userInputIsNull() {
@@ -58,5 +50,13 @@ class FormulaTest {
         String actual = formula.getCustomDelimiterCandidate().orElse(null);
 
         assertNull(actual);
+    }
+
+    private static Stream<String> provideCorrectFormats() {
+        return TestcaseMethods.provideCorrectFormats();
+    }
+
+    private static Stream<String> provideWrongFormats() {
+        return TestcaseMethods.provideWrongFormats();
     }
 }

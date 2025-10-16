@@ -6,14 +6,14 @@ public class Operator extends CalculationElement {
         super(value);
     }
 
-    @Override
-    public ElementType getType() {
-        return ElementType.OPERATOR;
-    }
-
     public static Operator of(String value) {
         requireNonNumeric(value);
         return new Operator(value);
+    }
+
+    @Override
+    public ElementType getType() {
+        return ElementType.OPERATOR;
     }
 
     private static void requireNonNumeric(String value) {

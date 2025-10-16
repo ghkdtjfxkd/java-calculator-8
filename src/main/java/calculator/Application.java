@@ -6,9 +6,11 @@ import calculator.service.CalculateServiceImpl;
 
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        initController().run();
+    }
+
+    private static CalculateController initController() {
         CalculateService calculateService = new CalculateServiceImpl();
-        CalculateController controller = CalculateController.getInstance(calculateService);
-        controller.run();
+        return CalculateController.of(calculateService);
     }
 }

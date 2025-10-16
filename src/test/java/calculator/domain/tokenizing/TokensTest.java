@@ -20,6 +20,6 @@ class TokensTest {
     @DisplayName("숫자나 구분자로 지정되지 않은 문자가 식에 포함되어 있다면 예외를 발생시켜야 한다.")
     void correctDelimiterTokenizeTest() {
         String input = "1,2,3|";
-        assertThrows(IllegalArgumentException.class, () -> Tokens.of(input, Delimiters.defaults()));
+        assertThrows(IllegalArgumentException.class, () -> Tokens.from(input, Delimiters.defaults()));
     }
 }
