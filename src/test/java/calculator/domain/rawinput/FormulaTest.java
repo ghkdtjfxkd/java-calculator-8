@@ -37,10 +37,9 @@ class FormulaTest {
         String input = correctLeftBracket + correctCustomDelimiterCandidate + correctRightBracket;
         Formula formula = Formula.from(input);
 
-        String expected = correctCustomDelimiterCandidate;
-        String actual = formula.getCustomDelimiterCandidate();
+        String actual = formula.getCustomDelimiterCandidate().orElse(null);
 
-        assertEquals(expected, actual);
+        assertEquals(correctCustomDelimiterCandidate, actual);
     }
 
     @Test
@@ -58,10 +57,9 @@ class FormulaTest {
     @Test
     @DisplayName("커스텀_구분자_지정_형식이_올바르지_않다면_커스텀_구분자_후보는_`null`_이어야_한다.")
     void wrongCustomDelimiterFormat() {
-        String input = actualFormula;
-        Formula formula = Formula.from(input);
+        Formula formula = Formula.from(actualFormula);
 
-        String actual = formula.getCustomDelimiterCandidate();
+        String actual = formula.getCustomDelimiterCandidate().orElse(null);
 
         assertNull(actual);
     }

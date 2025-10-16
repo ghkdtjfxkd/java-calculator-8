@@ -21,22 +21,19 @@ public class CalculateServiceImpl implements CalculateService {
         return CalculationResponse.from(result.toString());
     }
 
-    private Delimiters defineDelimiters(String customDelimiterCandidate) {
-        Delimiters delimiters = Delimiters.defaults();
-        if(customDelimiterCandidate != null) {
-            delimiters = delimiters.withCustom(customDelimiterCandidate);
-        }
-
-        return delimiters;
-    }
-
     private Stream<CalculationElement> tokenize(Formula formula) {
-        Delimiters delimiters = defineDelimiters(formula.getCustomDelimiterCandidate());
+        Delimiters delimiters = defineDelimitersWith(formula);
         String actualFormula = formula.getActualFormula();
 
         Tokens tokens = Tokens.of(actualFormula, delimiters);
 
         return tokens.stream();
+    }
+
+    private Delimiters defineDelimitersWith(Formula formula) {
+        return formula.getCustomDelimiterCandidate()
+                .map(Delimiters::withCustom)
+                .orElseGet(Delimiters::defaults);
     }
 
     private BigInteger calculateFrom(Stream<CalculationElement> tokens) {
