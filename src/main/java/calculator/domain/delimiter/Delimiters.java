@@ -24,7 +24,7 @@ public class Delimiters {
         return new Delimiters();
     }
 
-    public Delimiters withCustom(String customDelimiter) {
+    public static Delimiters withCustom(String customDelimiter) {
         return new Delimiters(customDelimiter);
     }
 
