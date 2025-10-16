@@ -46,6 +46,6 @@ public class Formula {
     }
 
     private int customDelimiterSectionSize() {
-        return CustomDelimiterSection.size();
+        return customDelimiterSection.specifiedLength();
     }
 }
