@@ -1,6 +1,5 @@
 package calculator.domain.tokenizing;
 
-import calculator.domain.delimiter.Delimiters;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.stream.Stream;

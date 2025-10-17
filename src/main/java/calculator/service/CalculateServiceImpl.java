@@ -1,7 +1,7 @@
 package calculator.service;
 
 import calculator.domain.calculation.Calculation;
-import calculator.domain.delimiter.Delimiters;
+import calculator.domain.tokenizing.Delimiters;
 import calculator.domain.rawinput.Formula;
 import calculator.domain.tokenizing.CalculationElement;
 import calculator.domain.tokenizing.Tokens;

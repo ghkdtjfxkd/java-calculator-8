@@ -1,4 +1,4 @@
-package calculator.domain.delimiter;
+package calculator.domain.tokenizing;
 
 import java.util.Arrays;
 import java.util.HashSet;
