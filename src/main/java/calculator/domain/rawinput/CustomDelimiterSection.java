@@ -1,12 +1,6 @@
 package calculator.domain.rawinput;
 
-import static calculator.domain.rawinput.CustomDelimiterSection.CustomDelimiterBracket.LEFT_BRACKET;
-import static calculator.domain.rawinput.CustomDelimiterSection.CustomDelimiterBracket.RIGHT_BRACKET;
-
 public class CustomDelimiterSection {
-
-    // 커스텀 구분자가 '문자'라는 조건이 제거되면 제거하거나 수정할 것.
-    private static final int CUSTOM_DELIMITER_ELEMENT_LENGTH = 1;
 
     private final String section;
 
@@ -14,9 +8,34 @@ public class CustomDelimiterSection {
         this.section = section;
     }
 
-    public static CustomDelimiterSection from(String rawInput) {
+    static CustomDelimiterSection from(String rawInput) {
         String section = extractSectionFrom(rawInput);
         return new CustomDelimiterSection(section);
+    }
+
+    String getCustomDelimiterCandidate() {
+        if(hasCustomDelimiter()) {
+            return removeBracketsTo(section);
+        }
+        return null;
+    }
+
+    boolean hasCustomDelimiter() {
+        if(section == null) {
+            return false;
+        }
+        return CustomDelimiterSyntax.isCovered(section);
+    }
+
+    int specifiedLength() {
+        return specifiedCustomDelimiterSectionSize();
+    }
+
+    private String removeBracketsTo(String section) {
+        int startIndex = CustomDelimiterSyntax.LEFT_BRACKET.length();
+        int endIndex = specifiedCustomDelimiterSectionSize() - CustomDelimiterSyntax.RIGHT_BRACKET.length();
+
+        return section.substring(startIndex, endIndex);
     }
 
     private static String extractSectionFrom(String rawInput) {
@@ -33,51 +52,34 @@ public class CustomDelimiterSection {
         return rawInput.length() >= specifiedCustomDelimiterSectionSize();
     }
 
-    String getCustomDelimiterCandidate() {
-        if(hasCustomDelimiter()) {
-            return removeBracketsTo(section);
-        }
-        return null;
-    }
-
-    boolean hasCustomDelimiter() {
-        if(section == null) {
-            return false;
-        }
-        return CustomDelimiterBracket.isCovered(section);
-    }
-
-    private String removeBracketsTo(String section) {
-        int startIndex = LEFT_BRACKET.length();
-        int endIndex = specifiedCustomDelimiterSectionSize() - RIGHT_BRACKET.length();
-
-        return section.substring(startIndex, endIndex);
-    }
-
-    int specifiedLength() {
-        return specifiedCustomDelimiterSectionSize();
-    }
-
     private static int specifiedCustomDelimiterSectionSize() {
-        return LEFT_BRACKET.length() + CUSTOM_DELIMITER_ELEMENT_LENGTH + RIGHT_BRACKET.length();
+        return CustomDelimiterSyntax.LEFT_BRACKET.length()
+                + CustomDelimiterSyntax.customDelimiterCandidateLength()
+                + CustomDelimiterSyntax.RIGHT_BRACKET.length();
     }
 
-    enum CustomDelimiterBracket {
+    private enum CustomDelimiterSyntax {
         LEFT_BRACKET("//"),
         RIGHT_BRACKET("\\n"); // `\` + `n` 합쳐진 문자를 의미함. `\n`은 개행문자를 의미하지 않음.
 
+        // 커스텀 구분자가 '문자'라는 조건이 제거되면, 수정할 것.
+        private static final int CUSTOM_DELIMITER_ELEMENT_LENGTH = 1;
         private final String symbol;
 
-        CustomDelimiterBracket(String symbol) {
+        CustomDelimiterSyntax(String symbol) {
             this.symbol = symbol;
         }
 
-        int length() {
-            return symbol.length();
+        static int customDelimiterCandidateLength() {
+            return CUSTOM_DELIMITER_ELEMENT_LENGTH;
         }
 
         static boolean isCovered(String section) {
             return section.startsWith(LEFT_BRACKET.symbol) && section.endsWith(RIGHT_BRACKET.symbol);
+        }
+
+        int length() {
+            return symbol.length();
         }
     }
 }

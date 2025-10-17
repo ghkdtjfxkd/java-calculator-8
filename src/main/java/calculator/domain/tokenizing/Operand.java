@@ -11,17 +11,17 @@ public class Operand extends CalculationElement {
         this.operand = new BigInteger(rawValue);
     }
 
+    static Operand valueOf(String value) {
+        return new Operand(value);
+    }
+
     @Override
-    public ElementType getType() {
-        return ElementType.OPERAND;
+    protected CalculationElementType getType() {
+        return CalculationElementType.OPERAND;
     }
 
     public BigInteger getValue() {
         return operand;
-    }
-
-    public static Operand valueOf(String value) {
-        return new Operand(value);
     }
 
     public BigInteger getOperand() {

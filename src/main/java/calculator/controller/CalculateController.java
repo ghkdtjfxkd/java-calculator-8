@@ -14,7 +14,7 @@ public class CalculateController {
         this.calculateService = calculateService;
     }
 
-    public static CalculateController getInstance(CalculateService calculateService){
+    public static CalculateController of(CalculateService calculateService){
         return new CalculateController(calculateService);
     }
 

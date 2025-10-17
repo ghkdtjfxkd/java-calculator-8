@@ -7,36 +7,39 @@ import java.util.stream.Stream;
 
 public class Tokens {
 
-    public static Tokens of(String formula, Delimiters delimiters) {
-        return new Tokens(parseToQueue(formula, delimiters));
-    }
-
     private final Queue<CalculationElement> tokens;
 
     private Tokens(Queue<CalculationElement> tokens) {
         this.tokens = new LinkedList<>(tokens);
     }
 
+    public static Tokens from(String formula, Delimiters delimiters) {
+        return new Tokens(parseToQueue(formula, delimiters));
+    }
+
+    public Stream<CalculationElement> getTokensStream() {
+        return tokens.stream();
+    }
+
     private static Queue<CalculationElement> parseToQueue(String formula, Delimiters delimiters) {
         Queue<CalculationElement> elements = new LinkedList<>();
-        StringBuilder stringBuilder = new StringBuilder();
-
+        StringBuilder buffer = new StringBuilder();
         for (char currentChar : formula.toCharArray()) {
             requireRecognizedCalculationElement(currentChar, delimiters);
             if(isNotDelimiter(currentChar, delimiters)) {
-                stringBuilder.append(currentChar);
+                buffer.append(currentChar);
                 continue;
             }
-            offerStackedOperandBuffer(stringBuilder, elements);
+            offerStackedOperandBuffer(buffer, elements);
             offerOperator(currentChar, elements);
         }
-        offerStackedOperandBuffer(stringBuilder, elements);
+        offerStackedOperandBuffer(buffer, elements);
         return elements;
     }
 
     private static void requireRecognizedCalculationElement(char currentChar ,Delimiters delimiters) {
         if(isUnrecognizedSymbol(currentChar, delimiters)) {
-            throw new IllegalArgumentException("식에 올바르지 않은 문자가 섞여있습니다. 처음으로 식별된 문자: [ " + currentChar + " ]");
+            throw new IllegalArgumentException("식에 올바르지 않은 문자가 섞여있습니다. 최초로 식별된 올바르지 않은 문자: [ " + currentChar + " ]");
         }
     }
 
@@ -53,23 +56,18 @@ public class Tokens {
     }
 
     private static void offerOperator(char currentChar, Queue<CalculationElement> elements) {
-        String value = Character.toString(currentChar);
-        elements.offer(CalculationElement.from(value));
+        elements.offer(CalculationElement.of(currentChar));
     }
 
-    private static void offerOperand(StringBuilder stringBuilder, Queue<CalculationElement> elements) {
-        String token = stringBuilder.toString().trim();
+    private static void offerStackedOperandBuffer(StringBuilder buffer, Queue<CalculationElement> elements) {
+        offerOperand(buffer, elements);
+        buffer.setLength(0);
+    }
+
+    private static void offerOperand(StringBuilder buffer, Queue<CalculationElement> elements) {
+        String token = buffer.toString().trim();
         if(!token.isEmpty()) {
-            elements.offer(CalculationElement.from(token));
+            elements.offer(CalculationElement.of(token));
         }
-    }
-
-    private static void offerStackedOperandBuffer(StringBuilder stringBuilder, Queue<CalculationElement> elements) {
-        offerOperand(stringBuilder, elements);
-        stringBuilder.setLength(0);
-    }
-
-    public Stream<CalculationElement> stream() {
-        return tokens.stream();
     }
 }

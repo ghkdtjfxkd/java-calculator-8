@@ -21,58 +21,21 @@ public class Calculation {
 
     public BigInteger calculate() {
         CalculationResult result = CalculationResult.of(BigInteger.ZERO);
-
-        if (elements.isEmpty()) {
+        if (!hasMoreElements()) {
             return result.getValue();
         }
 
         result = getFirstOperand();
-//        CalculationElement previous = createDummyOperand();
-
         while (hasMoreElements()) {
             CalculationElement current = elements.poll();
             result = processElement(current, result);
-//            previous = current;
         }
 
         return result.getValue();
     }
 
-    private CalculationResult processElement(CalculationElement current, CalculationResult calculationResult) {
-        if (current != null && current.isOperator()) {
-            return processOperator(calculationResult);
-        }
-        throw new IllegalStateException("예상치 못한 피연산자");
-    }
-
-    private CalculationResult processOperator(CalculationResult calculationResult) {
-        validateHasNextOperand();
-        CalculationElement nextElement = getNextElement();
-        validateIsOperand(nextElement);
-
-        BigInteger operand = ((Operand) nextElement).getOperand();
-
-        return calculationResult.plus(operand);
-    }
-
     private boolean hasMoreElements() {
         return !elements.isEmpty();
-    }
-
-    private CalculationElement getNextElement() {
-        return elements.poll();
-    }
-
-    private void validateHasNextOperand() {
-        if (!hasMoreElements()) {
-            throw new IllegalArgumentException("연산자 다음에는 숫자가 와야 합니다");
-        }
-    }
-
-    private static Queue<CalculationElement> parseToQueue(Stream<CalculationElement> tokens) {
-        Queue<CalculationElement> calculateQueue = new LinkedList<>();
-        tokens.forEach(calculateQueue::add);
-        return calculateQueue;
     }
 
     private CalculationResult getFirstOperand() {
@@ -84,18 +47,54 @@ public class Calculation {
     }
 
     private void requireFirstCalculationElementIsOperand(CalculationElement element) {
-        if(element == null || !element.isOperand()) {
+        if(element == null || element.isOperator()) {
             throw new IllegalArgumentException("계산식은 숫자로 시작해야 한다.");
         }
     }
 
-    private void validateIsOperand(CalculationElement element) {
-        if(!element.isOperand()) {
+    private CalculationResult processElement(CalculationElement current, CalculationResult calculationResult) {
+        if (current != null && !current.isOperand()) {
+            return processOperator(calculationResult);
+        }
+        return calculationResult;
+    }
+
+    private CalculationResult processOperator(CalculationResult calculationResult) {
+        requireOperatorFollowedByOperand();
+        CalculationElement nextElement = getNextElement();
+        requireOperand(nextElement);
+
+        BigInteger operand = ((Operand) nextElement).getOperand();
+
+        return calculationResult.plus(operand);
+    }
+
+    private void requireOperatorFollowedByOperand() {
+        if (!hasMoreElements() && nextElementIsOperand()) {
+            throw new IllegalArgumentException("연산자 다음에는 숫자가 와야 합니다.");
+        }
+    }
+
+    private boolean nextElementIsOperand() {
+        if(elements.isEmpty()) {
+            return false;
+        }
+        return elements.peek().isOperand();
+    }
+
+    private CalculationElement getNextElement() {
+        return elements.poll();
+    }
+
+    private void requireOperand(CalculationElement nextElement) {
+        if(nextElement.isOperator()) {
             throw new IllegalArgumentException("피연산자 다음에는 연산자가 와야한다.");
         }
     }
 
-    private static CalculationElement createDummyOperand() {
-        return Operand.from("0");
+    private static Queue<CalculationElement> parseToQueue(Stream<CalculationElement> tokens) {
+        Queue<CalculationElement> calculateQueue = new LinkedList<>();
+        tokens.forEach(calculateQueue::add);
+        return calculateQueue;
     }
 }

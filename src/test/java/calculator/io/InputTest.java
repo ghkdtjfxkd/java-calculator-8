@@ -34,7 +34,7 @@ class InputTest {
     }
 
     @Test
-    @DisplayName("사용자가_입력한_요청과_전달된_값은_같아야_한다.")
+    @DisplayName("사용자가 입력한 요청과 전달된 값은 같아야한다.")
     void correctInput() {
         String provided = "1,2";
         String simulatedInput = provided + System.lineSeparator();
@@ -46,7 +46,7 @@ class InputTest {
     }
 
     @Test
-    @DisplayName("콘솔이_닫힌_뒤에는_추가적인_입력을_받을_수_없다.")
+    @DisplayName("콘솔이 닫힌 뒤에는 추가적인 입력을 받을 수 없다.")
     void afterCloseConsole() {
         String simulatedInput = "1,2" + System.lineSeparator();
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());

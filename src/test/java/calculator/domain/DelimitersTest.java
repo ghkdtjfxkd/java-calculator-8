@@ -22,23 +22,18 @@ class DelimitersTest {
     }
 
     @Test
-    @DisplayName("커스텀_구분자를_추가할_수_있다.")
-    void addCustomDelimiter() {
+    @DisplayName("커스텀 구분자를 추가할 수 있다.")
+    void addCustomDelimiterTest() {
         String customDelimiter = "/";
-        Delimiters delimiters = Delimiters.defaults();
-        delimiters = delimiters.withCustom(customDelimiter);
+        Delimiters delimiters = Delimiters.withCustom(customDelimiter);
 
-        boolean delimitersContainCustomDelimiter = delimiters.has(customDelimiter.charAt(0));
-
-        assertTrue(delimitersContainCustomDelimiter);
+        assertTrue(delimiters.has(customDelimiter.charAt(0)));
     }
 
     @Test
-    @DisplayName("구분자는_숫자가_아니어야_한다.")
-    void numericDelimiter() {
-        String customDelimiter = "1";
-        Delimiters delimiters = Delimiters.defaults();
-
-        assertThrows(IllegalArgumentException.class, () -> delimiters.withCustom(customDelimiter));
+    @DisplayName("구분자는 숫자가 아니어야 한다.")
+    void numericDelimiterTest() {
+        String numericDelimiter = "1";
+        assertThrows(IllegalArgumentException.class, () -> Delimiters.withCustom(numericDelimiter));
     }
 }
