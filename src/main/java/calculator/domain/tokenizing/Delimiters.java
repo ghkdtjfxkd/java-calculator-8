@@ -28,7 +28,7 @@ public class Delimiters {
         return new Delimiters(customDelimiter);
     }
 
-    public boolean has(char delimiter) {
+    boolean has(char delimiter) {
         return this.delimiters.contains(String.valueOf(delimiter));
     }
 

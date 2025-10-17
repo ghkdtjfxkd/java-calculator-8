@@ -10,15 +10,15 @@ public class CalculationResult {
         this.value = value;
     }
 
-    public static CalculationResult of(BigInteger value) {
+    static CalculationResult of(BigInteger value) {
         return new CalculationResult(value);
     }
 
-    public CalculationResult plus(BigInteger addend) {
+    CalculationResult plus(BigInteger addend) {
         return new CalculationResult(this.value.add(addend));
     }
 
-    public BigInteger getValue() {
+    BigInteger getValue() {
         return this.value;
     }
 }
