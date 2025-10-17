@@ -44,10 +44,10 @@
 
 ## 리팩토링
 - [x] Operator를 VO로 리팩토링하기
-- [ ] 내부 enum 클래스 리팩토링하기
+- [x] 내부 enum 클래스 리팩토링하기
   - [x] Formula
   - [x] CustomDelimiterSection
-  - [ ] Delimiters
+  - [x] CalculationElement(tokenizing)
 - [x] 입력된 식(Raw Input) 도메인에서 커스텀 구분자 관련 책임 리팩토링 
 - [x] 사용하지 않는 주석, 메서드 삭제하기
   - [x] Calculation

@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 public class CalculationResult {
 
-    private BigInteger value;
+    private final BigInteger value;
 
     private CalculationResult(BigInteger value) {
         this.value = value;
@@ -19,6 +19,6 @@ public class CalculationResult {
     }
 
     public BigInteger getValue() {
-        return value;
+        return this.value;
     }
 }

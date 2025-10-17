@@ -2,7 +2,7 @@ package calculator.domain.tokenizing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import calculator.domain.tokenizing.CalculationElement.ElementType;
+import calculator.domain.tokenizing.CalculationElement.CalculationElementType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +14,8 @@ class CalculationElementTest {
         String onlyNumber = "111111";
         CalculationElement calculationElement = CalculationElement.of(onlyNumber);
 
-        ElementType expected = ElementType.OPERAND;
-        ElementType actual = calculationElement.getType();
+        CalculationElementType expected = CalculationElementType.OPERAND;
+        CalculationElementType actual = calculationElement.getType();
 
         assertEquals(expected, actual);
     }
@@ -26,8 +26,8 @@ class CalculationElementTest {
         String onlyNumber = "-";
         CalculationElement calculationElement = CalculationElement.of(onlyNumber);
 
-        ElementType expected = ElementType.OPERATOR;
-        ElementType actual = calculationElement.getType();
+        CalculationElementType expected = CalculationElementType.OPERATOR;
+        CalculationElementType actual = calculationElement.getType();
 
         assertEquals(expected, actual);
     }

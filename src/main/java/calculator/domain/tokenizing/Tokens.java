@@ -56,8 +56,7 @@ public class Tokens {
     }
 
     private static void offerOperator(char currentChar, Queue<CalculationElement> elements) {
-        String value = Character.toString(currentChar);
-        elements.offer(CalculationElement.of(value));
+        elements.offer(CalculationElement.of(currentChar));
     }
 
     private static void offerStackedOperandBuffer(StringBuilder buffer, Queue<CalculationElement> elements) {
