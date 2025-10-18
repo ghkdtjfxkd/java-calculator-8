@@ -20,32 +20,8 @@ public class Calculation {
         return new Calculation(parseToQueue(tokens));
     }
 
-//    public BigInteger calculate() {
-//        CalculationResult result = CalculationResult.of(BigInteger.ZERO);
-//        if (!hasMoreElements()) {
-//            return result.getValue();
-//        }
-//
-//        result = getFirstOperand();
-//
-//        while (hasMoreElements()) {
-//            CalculationElement current = elements.poll();
-//            result = processElement(current, result);
-//        }
-//
-//        return result.getValue();
-//    }
-
-    private boolean hasMoreElements() {
-        return !elements.isEmpty();
-    }
     public CalculationResult calculate() {
-        CalculationResult result = CalculationResult.of(BigInteger.ZERO);
-        if (!hasMoreElements()) {
-            return result;
-        }
-
-        result = getFirstOperand();
+        CalculationResult result = getFirstOperand();
         while (hasMoreElements()) {
             CalculationElement current = elements.poll();
             result = processElement(current, result);
@@ -54,6 +30,9 @@ public class Calculation {
     }
 
     private CalculationResult getFirstOperand() {
+        if(elements.peek() == null) {
+            return CalculationResult.of(BigInteger.ZERO);
+        }
         CalculationElement first = elements.poll();
         requireFirstCalculationElementIsOperand(first);
 
@@ -62,9 +41,13 @@ public class Calculation {
     }
 
     private void requireFirstCalculationElementIsOperand(CalculationElement element) {
-        if(element == null || element.isOperator()) {
+        if(element.isOperator()) {
             throw new IllegalArgumentException("계산식은 숫자로 시작해야 한다.");
         }
+    }
+
+    private boolean hasMoreElements() {
+        return !elements.isEmpty();
     }
 
     private CalculationResult processElement(CalculationElement current, CalculationResult calculationResult) {
