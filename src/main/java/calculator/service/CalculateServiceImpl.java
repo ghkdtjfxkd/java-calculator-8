@@ -1,6 +1,7 @@
 package calculator.service;
 
 import calculator.domain.calculation.Calculation;
+import calculator.domain.vo.CalculationResult;
 import calculator.domain.tokenizing.Delimiters;
 import calculator.domain.rawinput.Formula;
 import calculator.domain.vo.CalculationElement;
@@ -37,6 +38,8 @@ public class CalculateServiceImpl implements CalculateService {
 
     private BigInteger calculate(Stream<CalculationElement> tokens) {
         Calculation calculation =  Calculation.from(tokens);
-        return calculation.calculate();
+        CalculationResult result = calculation.calculate();
+
+        return result.getValue();
     }
 }

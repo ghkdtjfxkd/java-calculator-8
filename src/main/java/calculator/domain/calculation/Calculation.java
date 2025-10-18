@@ -1,6 +1,7 @@
 package calculator.domain.calculation;
 
 import calculator.domain.vo.CalculationElement;
+import calculator.domain.vo.CalculationResult;
 import calculator.domain.vo.Operand;
 import java.math.BigInteger;
 import java.util.LinkedList;
@@ -19,24 +20,37 @@ public class Calculation {
         return new Calculation(parseToQueue(tokens));
     }
 
-    public BigInteger calculate() {
+//    public BigInteger calculate() {
+//        CalculationResult result = CalculationResult.of(BigInteger.ZERO);
+//        if (!hasMoreElements()) {
+//            return result.getValue();
+//        }
+//
+//        result = getFirstOperand();
+//
+//        while (hasMoreElements()) {
+//            CalculationElement current = elements.poll();
+//            result = processElement(current, result);
+//        }
+//
+//        return result.getValue();
+//    }
+
+    private boolean hasMoreElements() {
+        return !elements.isEmpty();
+    }
+    public CalculationResult calculate() {
         CalculationResult result = CalculationResult.of(BigInteger.ZERO);
         if (!hasMoreElements()) {
-            return result.getValue();
+            return result;
         }
 
         result = getFirstOperand();
-
         while (hasMoreElements()) {
             CalculationElement current = elements.poll();
             result = processElement(current, result);
         }
-
-        return result.getValue();
-    }
-
-    private boolean hasMoreElements() {
-        return !elements.isEmpty();
+        return result;
     }
 
     private CalculationResult getFirstOperand() {

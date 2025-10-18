@@ -1,4 +1,4 @@
-package calculator.domain.calculation;
+package calculator.domain.vo;
 
 import java.math.BigInteger;
 
@@ -10,15 +10,15 @@ public class CalculationResult {
         this.value = value;
     }
 
-    static CalculationResult of(BigInteger value) {
+    public static CalculationResult of(BigInteger value) {
         return new CalculationResult(value);
     }
 
-    CalculationResult plus(BigInteger addend) {
+    public CalculationResult plus(BigInteger addend) {
         return new CalculationResult(this.value.add(addend));
     }
 
-    BigInteger getValue() {
+    public BigInteger getValue() {
         return this.value;
     }
 }
