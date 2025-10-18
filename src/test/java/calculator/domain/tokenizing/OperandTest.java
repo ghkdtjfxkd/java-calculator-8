@@ -16,7 +16,7 @@ class OperandTest {
         Operand operand = Operand.valueOf(overLongRangeNumber);
 
         BigInteger expected = new BigInteger(overLongRangeNumber);
-        BigInteger actual = operand.getOperand();
+        BigInteger actual = operand.getValue();
 
         assertEquals(expected, actual);
     }

@@ -26,6 +26,7 @@ public class Calculation {
         }
 
         result = getFirstOperand();
+
         while (hasMoreElements()) {
             CalculationElement current = elements.poll();
             result = processElement(current, result);
@@ -64,22 +65,20 @@ public class Calculation {
         CalculationElement nextElement = getNextElement();
         requireOperand(nextElement);
 
-        BigInteger operand = ((Operand) nextElement).getOperand();
+        BigInteger operand = ((Operand) nextElement).getValue();
 
         return calculationResult.plus(operand);
     }
 
     private void requireOperatorFollowedByOperand() {
-        if (!hasMoreElements() && nextElementIsOperand()) {
+        if (!hasMoreElements() || !nextElementIsOperand()) {
             throw new IllegalArgumentException("연산자 다음에는 숫자가 와야 합니다.");
         }
     }
 
     private boolean nextElementIsOperand() {
-        if(elements.isEmpty()) {
-            return false;
-        }
-        return elements.peek().isOperand();
+        CalculationElement next = elements.peek();
+        return next != null && next.isOperand();
     }
 
     private CalculationElement getNextElement() {

@@ -23,8 +23,4 @@ public class Operand extends CalculationElement {
     public BigInteger getValue() {
         return operand;
     }
-
-    public BigInteger getOperand() {
-        return this.operand;
-    }
 }
