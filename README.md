@@ -40,7 +40,7 @@
 - [x] 계산 도메인 테스트 코드 작성하기
   - [x] Calculation
   - [x] CalculationResult
-- [ ] OutputView 테스트 코드 작성하기
+- [x] OutputView 테스트 코드 작성하기
 
 ## 리팩토링
 - [x] Operator를 VO로 리팩토링하기
@@ -55,4 +55,3 @@
 - [x] 도메인 내부용 매서드 접근 제어자 스코프 수정하기(public -> (default))
   - [x] 공통으로 쓰이는 계산 요소 클래스들 vo 패키지로 이동 후 변경 ((default) -> public)
 
-## 추가 구현
