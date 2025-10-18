@@ -13,10 +13,7 @@ public class Delimiters {
         this.delimiters = Set.copyOf(DefaultDelimiter.getDelimiters());
     }
 
-    private Delimiters(String customDelimiter) {
-        requireNonNumerical(customDelimiter);
-        Set<String> delimiters = new HashSet<>(DefaultDelimiter.getDelimiters());
-        delimiters.add(customDelimiter);
+    private Delimiters(Set<String> delimiters) {
         this.delimiters = Set.copyOf(delimiters);
     }
 
@@ -25,20 +22,27 @@ public class Delimiters {
     }
 
     public static Delimiters withCustom(String customDelimiter) {
-        return new Delimiters(customDelimiter);
+        requireNonNumerical(customDelimiter);
+        return new Delimiters(getDelimitersWith(customDelimiter));
     }
 
     boolean has(char delimiter) {
         return this.delimiters.contains(String.valueOf(delimiter));
     }
 
-    private void requireNonNumerical(String delimiter) {
+    private static void requireNonNumerical(String delimiter) {
         if (isDigitDelimiter(delimiter)) {
             throw new IllegalArgumentException("숫자는 구분자가 될 수 없습니다.");
         }
     }
 
-    private boolean isDigitDelimiter(String delimiter) {
+    private static Set<String> getDelimitersWith(String customDelimiter) {
+        Set<String> delimiters = new HashSet<>(Set.copyOf(DefaultDelimiter.getDelimiters()));
+        delimiters.add(customDelimiter);
+        return delimiters;
+    }
+
+    private static boolean isDigitDelimiter(String delimiter) {
         return delimiter.chars().anyMatch(Character::isDigit);
     }
 
@@ -57,9 +61,13 @@ public class Delimiters {
         }
 
         static Set<String> getDelimiters() {
-            return Arrays.stream(DefaultDelimiter.values())
+            return Arrays.stream(getSymbols())
                     .map(DefaultDelimiter::getDelimiter)
                     .collect(Collectors.toSet());
+        }
+
+        private static DefaultDelimiter[] getSymbols() {
+            return DefaultDelimiter.values();
         }
     }
 }
