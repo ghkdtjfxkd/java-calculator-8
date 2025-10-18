@@ -15,14 +15,9 @@ public class CalculationResult {
         return new CalculationResult(value);
     }
 
-    private static void requireNonNull(BigInteger value) {
-        if(value == null) {
-            throw new IllegalArgumentException("계산 결과는 null이 올 수 없습니다.");
-        }
-    }
-
     public CalculationResult plus(BigInteger addend) {
-        if(addend == null || addend.equals(BigInteger.ZERO)) {
+        requireNonNull(addend);
+        if(addend.equals(BigInteger.ZERO)) {
             return this;
         }
         return new CalculationResult(this.value.add(addend));
@@ -30,5 +25,11 @@ public class CalculationResult {
 
     public BigInteger getValue() {
         return this.value;
+    }
+
+    private static void requireNonNull(BigInteger value) {
+        if(value == null) {
+            throw new IllegalArgumentException("계산 결과는 null이 올 수 없습니다.");
+        }
     }
 }

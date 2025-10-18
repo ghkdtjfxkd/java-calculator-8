@@ -2,13 +2,13 @@ package calculator.domain.vo;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import calculator.domain.calculation.Calculation;
 import java.math.BigInteger;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
 
 class CalculationResultTest {
 
@@ -18,17 +18,29 @@ class CalculationResultTest {
         assertThrows(IllegalArgumentException.class ,() -> CalculationResult.of(null));
     }
 
+    @Test
+    @DisplayName("기존 계산 결과에 더하려는 값이 null이라면 예외가 발생해야 한다.")
+    void provideNullOperandsTest() {
+        CalculationResult previous  = CalculationResult.of(BigInteger.ZERO);
+        assertThrows(IllegalArgumentException.class ,() -> previous.plus(null));
+    }
+
     @ParameterizedTest
-    @MethodSource("provideOnlyOneOperandTokens")
-    @DisplayName("계산 요소 큐에 피연산자 하나만 들어있을 경우, 계산을 시도한다면 그 피연산자의 값을 반환한다.")
-    void onlyOneOperandTest(Operand operand) {
-        Stream<CalculationElement> onlyOneOperand = Stream.of(operand);
-        Calculation calculation = Calculation.from(onlyOneOperand);
-        CalculationResult calculationResult = calculation.calculate();
+    @MethodSource("provideOperands")
+    @DisplayName("기존 계산 결과에 값이 정상적으로 더해져야 한다.")
+    void calculationResultPlusTest(BigInteger operand) {
+        CalculationResult previous  = CalculationResult.of(BigInteger.ZERO);
 
-        BigInteger expected = operand.getValue();
-        BigInteger actual = calculationResult.getValue();
-
+        BigInteger expected = operand.add(previous.getValue());
+        BigInteger actual = previous.plus(operand).getValue();
         assertEquals(expected, actual);
+    }
+
+    private static Stream<BigInteger> provideOperands() {
+        return Stream.of(
+                BigInteger.ZERO,
+                BigInteger.ONE,
+                new BigInteger("9223372036854775808") // 9223372036854775807(Long.MAX_VALUE) + 1
+        );
     }
 }
