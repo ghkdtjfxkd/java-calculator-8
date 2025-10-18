@@ -19,12 +19,13 @@ public class CalculateController {
     }
 
     public void run() {
-        OutputView.print(calculateResult());
-        InputView.close();
-    }
-
-    private CalculationResponse calculateResult() {
-        return calculateService.calculate(request());
+        try {
+            CalculationRequest request = request();
+            CalculationResponse response = calculateService.calculate(request);
+            OutputView.print(response);
+        } finally {
+            InputView.close();
+        }
     }
 
     private CalculationRequest request() {
