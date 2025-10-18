@@ -1,4 +1,4 @@
-package calculator.domain.tokenizing;
+package calculator.domain.vo;
 
 public class Operator extends CalculationElement {
 
@@ -6,7 +6,7 @@ public class Operator extends CalculationElement {
         super(value);
     }
 
-    static Operator of(String value) {
+    public static Operator of(String value) {
         requireNonNumeric(value);
         return new Operator(value);
     }

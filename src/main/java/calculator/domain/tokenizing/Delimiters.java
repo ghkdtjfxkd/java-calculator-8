@@ -1,4 +1,4 @@
-package calculator.domain.delimiter;
+package calculator.domain.tokenizing;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -28,7 +28,7 @@ public class Delimiters {
         return new Delimiters(customDelimiter);
     }
 
-    public boolean has(char delimiter) {
+    boolean has(char delimiter) {
         return this.delimiters.contains(String.valueOf(delimiter));
     }
 

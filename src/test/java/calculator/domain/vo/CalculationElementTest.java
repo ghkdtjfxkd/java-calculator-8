@@ -1,8 +1,8 @@
-package calculator.domain.tokenizing;
+package calculator.domain.vo;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import calculator.domain.tokenizing.CalculationElement.CalculationElementType;
+import calculator.domain.vo.CalculationElement.CalculationElementType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

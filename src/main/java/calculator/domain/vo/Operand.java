@@ -1,4 +1,4 @@
-package calculator.domain.tokenizing;
+package calculator.domain.vo;
 
 import java.math.BigInteger;
 
@@ -11,7 +11,7 @@ public class Operand extends CalculationElement {
         this.operand = new BigInteger(rawValue);
     }
 
-    static Operand valueOf(String value) {
+    public static Operand valueOf(String value) {
         return new Operand(value);
     }
 
@@ -22,9 +22,5 @@ public class Operand extends CalculationElement {
 
     public BigInteger getValue() {
         return operand;
-    }
-
-    public BigInteger getOperand() {
-        return this.operand;
     }
 }
