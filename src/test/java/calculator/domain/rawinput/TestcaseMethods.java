@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 class TestcaseMethods {
 
     static Stream<String> provideCorrectFormats() {
-        String correctFormat = TestElements.getCorrectFormat();
+        String correctFormat = getCorrectFormat();
         return Stream.of(
                 correctFormat + "1,2",
                 correctFormat + "1,2,3",
@@ -24,7 +24,6 @@ class TestcaseMethods {
 
     static Stream<String> provideWrongFormats() {
         String correctFormat = getCorrectFormat();
-
         return Stream.of(
                 "1,2,3" + correctFormat,
                 "1" + correctFormat + "2",

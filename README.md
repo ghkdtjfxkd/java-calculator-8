@@ -36,7 +36,7 @@
   - [x] `//\n12 3` 입력 시 잘못된 에러 메시지(검증 필터링 실패)
 
 ## 테스트
-- [ ] Tokens 테스트 코드 작성하기
+- [x] Tokens 테스트 코드 작성하기
 - [ ] 계산 도메인 테스트 코드 작성하기
   - [ ] Calculation
   - [ ] CalculationResult
