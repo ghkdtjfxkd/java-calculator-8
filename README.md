@@ -37,8 +37,8 @@
 
 ## 테스트
 - [x] Tokens 테스트 코드 작성하기
-- [ ] 계산 도메인 테스트 코드 작성하기
-  - [ ] Calculation
+- [x] 계산 도메인 테스트 코드 작성하기
+  - [x] Calculation
   - [ ] CalculationResult
 - [ ] OutputView 테스트 코드 작성하기
 
