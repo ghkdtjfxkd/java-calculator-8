@@ -1,4 +1,4 @@
-package calculator.domain.tokenizing;
+package calculator.domain.vo;
 
 public abstract class CalculationElement {
 
@@ -8,12 +8,12 @@ public abstract class CalculationElement {
         this.rawValue = rawValue;
     }
 
-    static CalculationElement of(char charSymbol){
+    public static CalculationElement of(char charSymbol){
         String symbol = String.valueOf(charSymbol);
         return of(symbol);
     }
 
-    static CalculationElement of(String symbol){
+    public static CalculationElement of(String symbol){
         if(isNumeric(symbol)){
             return Operand.valueOf(symbol);
         }

@@ -1,7 +1,7 @@
 package calculator.domain.calculation;
 
-import calculator.domain.tokenizing.CalculationElement;
-import calculator.domain.tokenizing.Operand;
+import calculator.domain.vo.CalculationElement;
+import calculator.domain.vo.Operand;
 import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.Queue;

@@ -1,4 +1,4 @@
-package calculator.domain.tokenizing;
+package calculator.domain.vo;
 
 import static org.junit.jupiter.api.Assertions.*;
 
