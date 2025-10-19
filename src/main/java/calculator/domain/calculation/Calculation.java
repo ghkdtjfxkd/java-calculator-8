@@ -27,7 +27,7 @@ public class Calculation {
     }
 
     public CalculationResult calculate() {
-        CalculationResult result = getFirstOperand();
+        CalculationResult result = initializeResultWithFirstOperand();
         while (hasMoreElements()) {
             CalculationElement current = elements.poll();
             result = processElement(current, result);
@@ -35,7 +35,7 @@ public class Calculation {
         return result;
     }
 
-    private CalculationResult getFirstOperand() {
+    private CalculationResult initializeResultWithFirstOperand() {
         if (elements.peek() == null) {
             return CalculationResult.of(BigInteger.ZERO);
         }
@@ -48,7 +48,7 @@ public class Calculation {
 
     private void requireFirstCalculationElementIsOperand(CalculationElement element) {
         if (element.isOperator()) {
-            throw new IllegalArgumentException("계산식은 숫자로 시작해야 한다.");
+            throw new IllegalArgumentException("계산식은 숫자로 시작해야 합니다.");
         }
     }
 
@@ -75,7 +75,7 @@ public class Calculation {
 
     private void requireOperatorFollowedByOperand() {
         if (!hasMoreElements() || !nextElementIsOperand()) {
-            throw new IllegalArgumentException("연산자 다음에는 숫자가 와야 합니다.");
+            throw new IllegalArgumentException("연산자 다음에는 피연산자가 와야 합니다.");
         }
     }
 
@@ -90,7 +90,7 @@ public class Calculation {
 
     private void requireOperand(CalculationElement nextElement) {
         if (nextElement.isOperator()) {
-            throw new IllegalArgumentException("피연산자 다음에는 연산자가 와야한다.");
+            throw new IllegalArgumentException("피연산자 다음에는 연산자가 와야 합니다.");
         }
     }
 }

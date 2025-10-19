@@ -39,7 +39,7 @@ public class Formula {
     }
 
     private boolean rawInputContainCustomDelimiter() {
-        return this.customDelimiterSection.hasCustomDelimiter();
+        return this.customDelimiterSection.hasCustomDelimiterCandidate();
     }
 
     private String extractActualFormulaSection() {

@@ -34,17 +34,17 @@ public class CustomDelimiterSection {
     }
 
     String getCustomDelimiterCandidate() {
-        if (hasCustomDelimiter()) {
+        if (hasCustomDelimiterCandidate()) {
             return removeBracketsTo(section);
         }
         return null;
     }
 
-    boolean hasCustomDelimiter() {
+    boolean hasCustomDelimiterCandidate() {
         if (section == null) {
             return false;
         }
-        return CustomDelimiterSyntax.isCovered(section);
+        return CustomDelimiterSyntax.isWrapped(section);
     }
 
     int specifiedLength() {
@@ -75,7 +75,7 @@ public class CustomDelimiterSection {
             return CUSTOM_DELIMITER_ELEMENT_LENGTH;
         }
 
-        static boolean isCovered(String section) {
+        static boolean isWrapped(String section) {
             return section.startsWith(LEFT_BRACKET.symbol) && section.endsWith(RIGHT_BRACKET.symbol);
         }
 

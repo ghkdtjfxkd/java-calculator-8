@@ -1,11 +1,11 @@
 package calculator.service;
 
 import calculator.domain.calculation.Calculation;
-import calculator.domain.vo.CalculationResult;
-import calculator.domain.tokenizing.Delimiters;
 import calculator.domain.rawinput.Formula;
-import calculator.domain.vo.CalculationElement;
+import calculator.domain.tokenizing.Delimiters;
 import calculator.domain.tokenizing.Tokens;
+import calculator.domain.vo.CalculationElement;
+import calculator.domain.vo.CalculationResult;
 import calculator.dto.CalculationRequest;
 import calculator.dto.CalculationResponse;
 import java.math.BigInteger;
@@ -16,13 +16,13 @@ public class CalculateServiceImpl implements CalculateService {
     @Override
     public CalculationResponse calculate(CalculationRequest request) {
         Formula formula = Formula.from(request.input());
-        Stream<CalculationElement> tokens = tokenized(formula);
-        BigInteger result = calculate(tokens);
+        Stream<CalculationElement> tokens = tokensOf(formula);
+        BigInteger result = evaluate(tokens);
 
         return CalculationResponse.from(result.toString());
     }
 
-    private Stream<CalculationElement> tokenized(Formula formula) {
+    private Stream<CalculationElement> tokensOf(Formula formula) {
         Delimiters delimiters = defineDelimitersWith(formula);
         String actualFormula = formula.getActualFormula();
 
@@ -36,7 +36,7 @@ public class CalculateServiceImpl implements CalculateService {
                 .orElseGet(Delimiters::defaults);
     }
 
-    private BigInteger calculate(Stream<CalculationElement> tokens) {
+    private BigInteger evaluate(Stream<CalculationElement> tokens) {
         Calculation calculation = Calculation.from(tokens);
         CalculationResult result = calculation.calculate();
 
