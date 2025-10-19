@@ -1,6 +1,7 @@
 package calculator.domain.tokenizing;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,7 @@ class DelimitersTest {
 
     @Test
     @DisplayName("기본_구분자는_콤마(,)와_콜론(:)을 가져야 한다.")
-    void defaultDelimitersHasCommaAndColon() {
+    void defaultDelimitersHasCommaAndColonTest() {
         Delimiters defaults = Delimiters.defaults();
         String comma = ",";
         String colon = ":";

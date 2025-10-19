@@ -14,11 +14,11 @@ enum TestElements {
         this.value = value;
     }
 
-    String get() {
-        return value;
-    }
-
     static String getCorrectFormat() {
         return CORRECT_LEFT.value + CORRECT_CANDIDATE.value + CORRECT_RIGHT.value;
+    }
+
+    String get() {
+        return value;
     }
 }

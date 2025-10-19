@@ -8,16 +8,20 @@ public abstract class CalculationElement {
         this.rawValue = rawValue;
     }
 
-    public static CalculationElement of(char charSymbol){
+    public static CalculationElement of(char charSymbol) {
         String symbol = String.valueOf(charSymbol);
         return of(symbol);
     }
 
-    public static CalculationElement of(String symbol){
-        if(isNumeric(symbol)){
+    public static CalculationElement of(String symbol) {
+        if (isNumeric(symbol)) {
             return Operand.valueOf(symbol);
         }
         return Operator.of(symbol);
+    }
+
+    private static boolean isNumeric(String value) {
+        return value.chars().allMatch(Character::isDigit);
     }
 
     protected abstract CalculationElementType getType();
@@ -28,10 +32,6 @@ public abstract class CalculationElement {
 
     public boolean isOperator() {
         return getType() == CalculationElementType.OPERATOR;
-    }
-
-    private static boolean isNumeric(String value) {
-        return value.chars().allMatch(Character::isDigit);
     }
 
     protected enum CalculationElementType {

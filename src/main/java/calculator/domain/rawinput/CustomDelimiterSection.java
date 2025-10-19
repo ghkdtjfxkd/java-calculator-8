@@ -13,33 +13,8 @@ public class CustomDelimiterSection {
         return new CustomDelimiterSection(section);
     }
 
-    String getCustomDelimiterCandidate() {
-        if(hasCustomDelimiter()) {
-            return removeBracketsTo(section);
-        }
-        return null;
-    }
-
-    boolean hasCustomDelimiter() {
-        if(section == null) {
-            return false;
-        }
-        return CustomDelimiterSyntax.isCovered(section);
-    }
-
-    int specifiedLength() {
-        return specifiedCustomDelimiterSectionSize();
-    }
-
-    private String removeBracketsTo(String section) {
-        int startIndex = CustomDelimiterSyntax.LEFT_BRACKET.length();
-        int endIndex = specifiedCustomDelimiterSectionSize() - CustomDelimiterSyntax.RIGHT_BRACKET.length();
-
-        return section.substring(startIndex, endIndex);
-    }
-
     private static String extractSectionFrom(String rawInput) {
-        if(!canContainCustomDelimiterSection(rawInput)) {
+        if (!canContainCustomDelimiterSection(rawInput)) {
             return null;
         }
         int startIndex = 0;
@@ -58,12 +33,38 @@ public class CustomDelimiterSection {
                 + CustomDelimiterSyntax.RIGHT_BRACKET.length();
     }
 
+    String getCustomDelimiterCandidate() {
+        if (hasCustomDelimiter()) {
+            return removeBracketsTo(section);
+        }
+        return null;
+    }
+
+    boolean hasCustomDelimiter() {
+        if (section == null) {
+            return false;
+        }
+        return CustomDelimiterSyntax.isCovered(section);
+    }
+
+    int specifiedLength() {
+        return specifiedCustomDelimiterSectionSize();
+    }
+
+    private String removeBracketsTo(String section) {
+        int startIndex = CustomDelimiterSyntax.LEFT_BRACKET.length();
+        int endIndex = specifiedCustomDelimiterSectionSize() - CustomDelimiterSyntax.RIGHT_BRACKET.length();
+
+        return section.substring(startIndex, endIndex);
+    }
+
     private enum CustomDelimiterSyntax {
         LEFT_BRACKET("//"),
         RIGHT_BRACKET("\\n"); // `\` + `n` 합쳐진 문자를 의미함. `\n`은 개행문자를 의미하지 않음.
 
         // 커스텀 구분자가 '문자'라는 조건이 제거되면, 수정할 것.
         private static final int CUSTOM_DELIMITER_ELEMENT_LENGTH = 1;
+
         private final String symbol;
 
         CustomDelimiterSyntax(String symbol) {

@@ -1,6 +1,7 @@
 package calculator.domain.tokenizing;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import calculator.domain.rawinput.Formula;
 import calculator.domain.vo.CalculationElement;
@@ -15,7 +16,7 @@ class TokensTest {
 
     @Test
     @DisplayName("사용자의_입력이_null_이라면_예외를_발생시킨다.")
-    void userInputIsNull() {
+    void userInputIsNullTest() {
         String input = null;
         assertThrows(IllegalArgumentException.class, () -> Formula.from(input));
     }

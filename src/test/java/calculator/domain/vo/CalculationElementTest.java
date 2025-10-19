@@ -1,6 +1,6 @@
 package calculator.domain.vo;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import calculator.domain.vo.CalculationElement.CalculationElementType;
 import org.junit.jupiter.api.DisplayName;
@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 class CalculationElementTest {
 
     @Test
-    @DisplayName("계산_요소가_숫자로만_이루어져_있다면_피연산자(Operand)여야_한다.")
-    void operand() {
+    @DisplayName("계산 요소가 숫자로만 이루어져 있다면 피연산자(Operand)여야 한다.")
+    void onlyNumericInputCreateOperandTest() {
         String onlyNumber = "111111";
         CalculationElement calculationElement = CalculationElement.of(onlyNumber);
 
@@ -21,10 +21,10 @@ class CalculationElementTest {
     }
 
     @Test
-    @DisplayName("계산_요소가_숫자가_아니라면_연산자(Operator)여야_한다.")
-    void operator() {
-        String onlyNumber = "-";
-        CalculationElement calculationElement = CalculationElement.of(onlyNumber);
+    @DisplayName("계산 요소가 숫자가 아니라면 연산자(Operator)여야 한다.")
+    void nonNumericInputCreateOperatorTest() {
+        String nonNumericInput = "-";
+        CalculationElement calculationElement = CalculationElement.of(nonNumericInput);
 
         CalculationElementType expected = CalculationElementType.OPERATOR;
         CalculationElementType actual = calculationElement.getType();

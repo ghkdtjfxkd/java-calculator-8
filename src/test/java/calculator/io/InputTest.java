@@ -1,6 +1,7 @@
 package calculator.io;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 import calculator.dto.CalculationRequest;
 import java.io.ByteArrayInputStream;
@@ -35,7 +36,7 @@ class InputTest {
 
     @Test
     @DisplayName("사용자가 입력한 요청과 전달된 값은 같아야한다.")
-    void correctInput() {
+    void correctInputTest() {
         String provided = "1,2";
         String simulatedInput = provided + System.lineSeparator();
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
@@ -47,7 +48,7 @@ class InputTest {
 
     @Test
     @DisplayName("콘솔이 닫힌 뒤에는 추가적인 입력을 받을 수 없다.")
-    void afterCloseConsole() {
+    void afterCloseConsoleTest() {
         String simulatedInput = "1,2" + System.lineSeparator();
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         System.setIn(inputStream);
