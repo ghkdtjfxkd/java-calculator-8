@@ -71,4 +71,4 @@
     - [x] 사용하지 않는 주석 / 메서드 / import 제거
 - [ ] tokenizing 과 calculation 최적화
     - [ ] Stream 왕복 오버헤드 제거 (Queue(Tokens) -> Stream -> Queue(Calculation))
-    - [ ] charArray() -> charAt(index)로 교체(생성 비용 제거)
+    - [x] charArray() -> charAt(index)로 교체(생성 비용 제거)

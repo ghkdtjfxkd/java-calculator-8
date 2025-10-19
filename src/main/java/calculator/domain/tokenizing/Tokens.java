@@ -10,7 +10,7 @@ public class Tokens {
     private final Queue<CalculationElement> tokens;
 
     private Tokens(Queue<CalculationElement> tokens) {
-        this.tokens = new LinkedList<>(tokens);
+        this.tokens = tokens;
     }
 
     public static Tokens from(String formula, Delimiters delimiters) {
@@ -20,7 +20,8 @@ public class Tokens {
     private static Queue<CalculationElement> parseToQueue(String formula, Delimiters delimiters) {
         Queue<CalculationElement> elements = new LinkedList<>();
         StringBuilder buffer = new StringBuilder();
-        for (char currentChar : formula.toCharArray()) {
+        for (int index = 0; index < formula.length(); index++) {
+            char currentChar = formula.charAt(index);
             requireRecognizedCalculationElement(currentChar, delimiters);
             if (isNotDelimiter(currentChar, delimiters)) {
                 buffer.append(currentChar);
