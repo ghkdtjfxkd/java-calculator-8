@@ -4,26 +4,24 @@ import calculator.domain.vo.CalculationElement;
 import calculator.domain.vo.CalculationResult;
 import calculator.domain.vo.Operand;
 import java.math.BigInteger;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.stream.Stream;
+import java.util.ArrayDeque;
+import java.util.Collection;
+import java.util.Deque;
 
 public class Calculation {
 
-    private final Queue<CalculationElement> elements;
+    private final Deque<CalculationElement> elements;
 
-    private Calculation(Queue<CalculationElement> elements) {
+    private Calculation(Deque<CalculationElement> elements) {
         this.elements = elements;
     }
 
-    public static Calculation from(Stream<CalculationElement> tokens) {
-        return new Calculation(parseToQueue(tokens));
+    public static Calculation from(Collection<CalculationElement> tokens) {
+        return new Calculation(parseToDeque(tokens));
     }
 
-    private static Queue<CalculationElement> parseToQueue(Stream<CalculationElement> tokens) {
-        Queue<CalculationElement> calculateQueue = new LinkedList<>();
-        tokens.forEach(calculateQueue::add);
-        return calculateQueue;
+    private static Deque<CalculationElement> parseToDeque(Collection<CalculationElement> tokens) {
+        return new ArrayDeque<>(tokens);
     }
 
     public CalculationResult calculate() {
@@ -66,8 +64,6 @@ public class Calculation {
     private CalculationResult processOperator(CalculationResult calculationResult) {
         requireOperatorFollowedByOperand();
         CalculationElement nextElement = getNextElement();
-        requireOperand(nextElement);
-
         BigInteger operand = ((Operand) nextElement).getValue();
 
         return calculationResult.plus(operand);
@@ -86,11 +82,5 @@ public class Calculation {
 
     private CalculationElement getNextElement() {
         return elements.poll();
-    }
-
-    private void requireOperand(CalculationElement nextElement) {
-        if (nextElement.isOperator()) {
-            throw new IllegalArgumentException("피연산자 다음에는 연산자가 와야 합니다.");
-        }
     }
 }

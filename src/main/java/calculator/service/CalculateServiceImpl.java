@@ -9,25 +9,25 @@ import calculator.domain.vo.CalculationResult;
 import calculator.dto.CalculationRequest;
 import calculator.dto.CalculationResponse;
 import java.math.BigInteger;
-import java.util.stream.Stream;
+import java.util.Collection;
 
 public class CalculateServiceImpl implements CalculateService {
 
     @Override
     public CalculationResponse calculate(CalculationRequest request) {
         Formula formula = Formula.from(request.input());
-        Stream<CalculationElement> tokens = tokensOf(formula);
+        Collection<CalculationElement> tokens = tokensOf(formula);
         BigInteger result = evaluate(tokens);
 
         return CalculationResponse.from(result.toString());
     }
 
-    private Stream<CalculationElement> tokensOf(Formula formula) {
+    private Collection<CalculationElement> tokensOf(Formula formula) {
         Delimiters delimiters = defineDelimitersWith(formula);
         String actualFormula = formula.getActualFormula();
 
         Tokens tokens = Tokens.from(actualFormula, delimiters);
-        return tokens.getTokensStream();
+        return tokens.getTokens();
     }
 
     private Delimiters defineDelimitersWith(Formula formula) {
@@ -36,7 +36,7 @@ public class CalculateServiceImpl implements CalculateService {
                 .orElseGet(Delimiters::defaults);
     }
 
-    private BigInteger evaluate(Stream<CalculationElement> tokens) {
+    private BigInteger evaluate(Collection<CalculationElement> tokens) {
         Calculation calculation = Calculation.from(tokens);
         CalculationResult result = calculation.calculate();
 
