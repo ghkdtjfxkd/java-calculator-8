@@ -12,13 +12,13 @@ public class InputView {
         return CalculationRequest.of(userInput);
     }
 
+    public static void close() {
+        Console.close();
+    }
+
     private static String read() {
         announceGuideMessage();
         return Console.readLine();
-    }
-
-    public static void close() {
-        Console.close();
     }
 
     private static void announceGuideMessage() {

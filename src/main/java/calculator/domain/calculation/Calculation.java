@@ -20,6 +20,12 @@ public class Calculation {
         return new Calculation(parseToQueue(tokens));
     }
 
+    private static Queue<CalculationElement> parseToQueue(Stream<CalculationElement> tokens) {
+        Queue<CalculationElement> calculateQueue = new LinkedList<>();
+        tokens.forEach(calculateQueue::add);
+        return calculateQueue;
+    }
+
     public CalculationResult calculate() {
         CalculationResult result = getFirstOperand();
         while (hasMoreElements()) {
@@ -30,7 +36,7 @@ public class Calculation {
     }
 
     private CalculationResult getFirstOperand() {
-        if(elements.peek() == null) {
+        if (elements.peek() == null) {
             return CalculationResult.of(BigInteger.ZERO);
         }
         CalculationElement first = elements.poll();
@@ -41,7 +47,7 @@ public class Calculation {
     }
 
     private void requireFirstCalculationElementIsOperand(CalculationElement element) {
-        if(element.isOperator()) {
+        if (element.isOperator()) {
             throw new IllegalArgumentException("계산식은 숫자로 시작해야 한다.");
         }
     }
@@ -83,14 +89,8 @@ public class Calculation {
     }
 
     private void requireOperand(CalculationElement nextElement) {
-        if(nextElement.isOperator()) {
+        if (nextElement.isOperator()) {
             throw new IllegalArgumentException("피연산자 다음에는 연산자가 와야한다.");
         }
-    }
-
-    private static Queue<CalculationElement> parseToQueue(Stream<CalculationElement> tokens) {
-        Queue<CalculationElement> calculateQueue = new LinkedList<>();
-        tokens.forEach(calculateQueue::add);
-        return calculateQueue;
     }
 }

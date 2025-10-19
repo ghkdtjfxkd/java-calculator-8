@@ -10,11 +10,11 @@ public class CalculateController {
 
     private final CalculateService calculateService;
 
-    private CalculateController(CalculateService calculateService){
+    private CalculateController(CalculateService calculateService) {
         this.calculateService = calculateService;
     }
 
-    public static CalculateController of(CalculateService calculateService){
+    public static CalculateController of(CalculateService calculateService) {
         return new CalculateController(calculateService);
     }
 

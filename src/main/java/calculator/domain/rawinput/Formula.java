@@ -17,8 +17,14 @@ public class Formula {
         return new Formula(rawInput);
     }
 
+    private static void requireNonNullInput(String rawInput) {
+        if (rawInput == null) {
+            throw new IllegalArgumentException("입력 값이 null 입니다.");
+        }
+    }
+
     public String getActualFormula() {
-        if (this.customDelimiterSection.hasCustomDelimiter()) {
+        if (rawInputContainCustomDelimiter()) {
             return extractActualFormulaSection();
         }
         return rawInput;
@@ -28,14 +34,12 @@ public class Formula {
         return Optional.ofNullable(this.customDelimiterSection.getCustomDelimiterCandidate());
     }
 
-    private static void requireNonNullInput(String rawInput) {
-        if (rawInput == null) {
-            throw new IllegalArgumentException("입력 값이 null 입니다.");
-        }
-    }
-
     private CustomDelimiterSection extractCustomDelimiterSection(String rawInput) {
         return CustomDelimiterSection.from(rawInput);
+    }
+
+    private boolean rawInputContainCustomDelimiter() {
+        return this.customDelimiterSection.hasCustomDelimiter();
     }
 
     private String extractActualFormulaSection() {

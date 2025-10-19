@@ -26,14 +26,14 @@ public class Delimiters {
         return new Delimiters(getDelimitersWith(customDelimiter));
     }
 
-    boolean has(char delimiter) {
-        return this.delimiters.contains(String.valueOf(delimiter));
-    }
-
     private static void requireNonNumerical(String delimiter) {
         if (isDigitDelimiter(delimiter)) {
             throw new IllegalArgumentException("숫자는 구분자가 될 수 없습니다.");
         }
+    }
+
+    private static boolean isDigitDelimiter(String delimiter) {
+        return delimiter.chars().anyMatch(Character::isDigit);
     }
 
     private static Set<String> getDelimitersWith(String customDelimiter) {
@@ -42,8 +42,8 @@ public class Delimiters {
         return delimiters;
     }
 
-    private static boolean isDigitDelimiter(String delimiter) {
-        return delimiter.chars().anyMatch(Character::isDigit);
+    boolean has(char delimiter) {
+        return this.delimiters.contains(String.valueOf(delimiter));
     }
 
     private enum DefaultDelimiter {
