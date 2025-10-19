@@ -3,6 +3,7 @@ package calculator.domain.calculation;
 import calculator.domain.vo.CalculationElement;
 import calculator.domain.vo.Operand;
 import calculator.domain.vo.Operator;
+import java.util.List;
 import java.util.stream.Stream;
 
 class TestcaseMethods {
@@ -15,7 +16,7 @@ class TestcaseMethods {
         );
     }
 
-    static Stream<Stream<CalculationElement>> provideCorrectSequences() {
+    static Stream<List<CalculationElement>> provideCorrectSequences() {
         return Stream.of(
                 correctSequenceBasic(),
                 correctSequenceMixedOperatorValue(),
@@ -23,7 +24,7 @@ class TestcaseMethods {
         );
     }
 
-    static Stream<Stream<CalculationElement>> provideWrongSequences() {
+    static Stream<List<CalculationElement>> provideWrongSequences() {
         return Stream.of(
                 wrongSequenceTokensOnlyOperator(),
                 wrongSequenceTokensStartAtOperator(),
@@ -32,16 +33,16 @@ class TestcaseMethods {
         );
     }
 
-    private static Stream<CalculationElement> correctSequenceBasic() {
-        return Stream.of(
+    private static List<CalculationElement> correctSequenceBasic() {
+        return List.of(
                 Operand.valueOf("1"),
                 Operator.of(","),
                 Operand.valueOf("2")
         );
     }
 
-    private static Stream<CalculationElement> correctSequenceMixedOperatorValue() {
-        return Stream.of(
+    private static List<CalculationElement> correctSequenceMixedOperatorValue() {
+        return List.of(
                 Operand.valueOf("1"),
                 Operator.of(","),
                 Operand.valueOf("12"),
@@ -50,16 +51,16 @@ class TestcaseMethods {
         );
     }
 
-    private static Stream<CalculationElement> correctSequenceContainOvercomeLongValueOperand() {
-        return Stream.of(
+    private static List<CalculationElement> correctSequenceContainOvercomeLongValueOperand() {
+        return List.of(
                 Operand.valueOf("1"),
                 Operator.of(","),
                 Operand.valueOf("9223372036854775808") // 9223372036854775807(Long.MAX_VALUE) + 1
         );
     }
 
-    private static Stream<CalculationElement> wrongSequenceTokensOperatorNextTokenIsOperator() {
-        return Stream.of(
+    private static List<CalculationElement> wrongSequenceTokensOperatorNextTokenIsOperator() {
+        return List.of(
                 Operand.valueOf("1"),
                 Operator.of(","),
                 Operator.of(","),
@@ -67,8 +68,8 @@ class TestcaseMethods {
         );
     }
 
-    private static Stream<CalculationElement> wrongSequenceTokensEndAtOperator() {
-        return Stream.of(
+    private static List<CalculationElement> wrongSequenceTokensEndAtOperator() {
+        return List.of(
                 Operand.valueOf("1"),
                 Operator.of(","),
                 Operand.valueOf("2"),
@@ -76,15 +77,15 @@ class TestcaseMethods {
         );
     }
 
-    private static Stream<CalculationElement> wrongSequenceTokensStartAtOperator() {
-        return Stream.of(
+    private static List<CalculationElement> wrongSequenceTokensStartAtOperator() {
+        return List.of(
                 Operator.of(","),
                 Operand.valueOf("2")
         );
     }
 
-    private static Stream<CalculationElement> wrongSequenceTokensOnlyOperator() {
-        return Stream.of(
+    private static List<CalculationElement> wrongSequenceTokensOnlyOperator() {
+        return List.of(
                 Operator.of(",")
         );
     }

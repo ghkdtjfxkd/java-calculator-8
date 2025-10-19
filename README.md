@@ -69,6 +69,10 @@
     - [x] 코드 네이밍 확인(테스트 코드)
     - [x] 생성자 사용 매서드 팩터리 사용 메서드로 전환
     - [x] 사용하지 않는 주석 / 메서드 / import 제거
-- [ ] tokenizing 과 calculation 최적화
-    - [ ] Stream 왕복 오버헤드 제거 (Queue(Tokens) -> Stream -> Queue(Calculation))
-    - [ ] charArray() -> charAt(index)로 교체(생성 비용 제거)
+- [x] tokenizing 과 calculation 최적화
+    - [x] Stream 왕복 오버헤드 제거 (Queue(Tokens) -> Stream -> Queue(Calculation))
+        - 초기에 Stream이 메모리 효율적일 것으로 판단하여 Stream 기반으로 설계
+        - 실제로는 이미 파싱 완료된 데이터를 Queue에 적재한 후 Stream으로 변환하는 방식이라
+          lazy evaluation의 이점이 없고 오히려 변환 오버헤드만 발생함을 확인
+    - [x] (Token) 에서 charArray() -> charAt(index)로 교체(생성 비용 제거)
+    - [x] (Tokens, Calculation) Queue -> ArrayDeque로 자료구조 변경

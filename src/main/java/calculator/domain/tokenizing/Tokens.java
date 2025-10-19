@@ -1,26 +1,27 @@
 package calculator.domain.tokenizing;
 
 import calculator.domain.vo.CalculationElement;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Queue;
-import java.util.stream.Stream;
 
 public class Tokens {
 
-    private final Queue<CalculationElement> tokens;
+    private final Deque<CalculationElement> tokens;
 
-    private Tokens(Queue<CalculationElement> tokens) {
-        this.tokens = new LinkedList<>(tokens);
+    private Tokens(Deque<CalculationElement> tokens) {
+        this.tokens = tokens;
     }
 
     public static Tokens from(String formula, Delimiters delimiters) {
-        return new Tokens(parseToQueue(formula, delimiters));
+        return new Tokens(parseToDeque(formula, delimiters));
     }
 
-    private static Queue<CalculationElement> parseToQueue(String formula, Delimiters delimiters) {
-        Queue<CalculationElement> elements = new LinkedList<>();
+    private static Deque<CalculationElement> parseToDeque(String formula, Delimiters delimiters) {
+        Deque<CalculationElement> elements = new ArrayDeque<>();
         StringBuilder buffer = new StringBuilder();
-        for (char currentChar : formula.toCharArray()) {
+        for (int index = 0; index < formula.length(); index++) {
+            char currentChar = formula.charAt(index);
             requireRecognizedCalculationElement(currentChar, delimiters);
             if (isNotDelimiter(currentChar, delimiters)) {
                 buffer.append(currentChar);
@@ -67,7 +68,7 @@ public class Tokens {
         elements.offer(CalculationElement.of(currentChar));
     }
 
-    public Stream<CalculationElement> getTokensStream() {
-        return tokens.stream();
+    public Deque<CalculationElement> getTokens() {
+        return new ArrayDeque<>(tokens);
     }
 }
