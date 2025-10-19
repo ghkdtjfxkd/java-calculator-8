@@ -7,14 +7,14 @@ public class Formula {
     private final String rawInput;
     private final CustomDelimiterSection customDelimiterSection;
 
-    private Formula(String rawInput) {
+    private Formula(String rawInput, CustomDelimiterSection customDelimiterSection) {
         this.rawInput = rawInput;
-        this.customDelimiterSection = extractCustomDelimiterSection(rawInput);
+        this.customDelimiterSection = customDelimiterSection;
     }
 
     public static Formula from(String rawInput) {
         requireNonNullInput(rawInput);
-        return new Formula(rawInput);
+        return new Formula(rawInput, CustomDelimiterSection.from(rawInput));
     }
 
     private static void requireNonNullInput(String rawInput) {
@@ -24,32 +24,20 @@ public class Formula {
     }
 
     public String getActualFormula() {
-        if (rawInputContainCustomDelimiter()) {
+        if (customDelimiterSection.hasCustomDelimiterCandidate()) {
             return extractActualFormulaSection();
         }
         return rawInput;
     }
 
     public Optional<String> getCustomDelimiterCandidate() {
-        return Optional.ofNullable(this.customDelimiterSection.getCustomDelimiterCandidate());
-    }
-
-    private CustomDelimiterSection extractCustomDelimiterSection(String rawInput) {
-        return CustomDelimiterSection.from(rawInput);
-    }
-
-    private boolean rawInputContainCustomDelimiter() {
-        return this.customDelimiterSection.hasCustomDelimiterCandidate();
+        return Optional.ofNullable(customDelimiterSection.getCustomDelimiterCandidate());
     }
 
     private String extractActualFormulaSection() {
-        int startIndex = customDelimiterSectionSize();
+        int startIndex = customDelimiterSection.specifiedLength();
         int endIndex = rawInput.length();
 
         return rawInput.substring(startIndex, endIndex);
-    }
-
-    private int customDelimiterSectionSize() {
-        return customDelimiterSection.specifiedLength();
     }
 }
