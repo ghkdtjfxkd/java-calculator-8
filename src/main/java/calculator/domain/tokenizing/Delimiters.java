@@ -21,29 +21,29 @@ public class Delimiters {
         return new Delimiters();
     }
 
-    public static Delimiters withCustom(String customDelimiter) {
-        requireNonNumerical(customDelimiter);
-        return new Delimiters(getDelimitersWith(customDelimiter));
+    public static Delimiters withCustom(String customDelimiterCandidate) {
+        requireNonNumerical(customDelimiterCandidate);
+        return new Delimiters(getDelimitersWith(customDelimiterCandidate));
     }
 
-    private static void requireNonNumerical(String delimiter) {
-        if (isDigitDelimiter(delimiter)) {
+    private static void requireNonNumerical(String candidate) {
+        if (isDigitDelimiter(candidate)) {
             throw new IllegalArgumentException("숫자는 구분자가 될 수 없습니다.");
         }
     }
 
-    private static boolean isDigitDelimiter(String delimiter) {
-        return delimiter.chars().anyMatch(Character::isDigit);
+    private static boolean isDigitDelimiter(String candidate) {
+        return candidate.chars().anyMatch(Character::isDigit);
     }
 
-    private static Set<String> getDelimitersWith(String customDelimiter) {
+    private static Set<String> getDelimitersWith(String customDelimiterCandidate) {
         Set<String> delimiters = new HashSet<>(Set.copyOf(DefaultDelimiter.getDelimiters()));
-        delimiters.add(customDelimiter);
+        delimiters.add(customDelimiterCandidate);
         return delimiters;
     }
 
-    boolean has(char delimiter) {
-        return this.delimiters.contains(String.valueOf(delimiter));
+    boolean has(char symbol) {
+        return this.delimiters.contains(String.valueOf(symbol));
     }
 
     private enum DefaultDelimiter {
