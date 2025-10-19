@@ -16,7 +16,7 @@ class TestcaseMethods {
         return Stream.of(
                 correctFormat + "1,2",
                 correctFormat + "1,2,3",
-                correctFormat +  " ",
+                correctFormat + " ",
                 correctFormat + ",,",
                 correctFormat
         );

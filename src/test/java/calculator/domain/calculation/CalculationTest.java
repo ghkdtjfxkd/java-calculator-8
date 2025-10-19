@@ -1,6 +1,7 @@
 package calculator.domain.calculation;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import calculator.domain.vo.CalculationElement;
 import calculator.domain.vo.CalculationResult;
@@ -17,7 +18,7 @@ class CalculationTest {
 
     @Test
     @DisplayName("계산 요소 큐가 비어있을 때, 계산을 시도한다면 0을 반환한다.")
-    void vacantQueueCalculationTest() {
+    void vacantCalculationQueueTest() {
         Stream<CalculationElement> vacantStream = Stream.of();
         Calculation calculation = Calculation.from(vacantStream);
         CalculationResult calculationResult = calculation.calculate();
@@ -31,7 +32,7 @@ class CalculationTest {
     @ParameterizedTest
     @MethodSource("provideOnlyOneOperandTokens")
     @DisplayName("계산 요소 큐에 피연산자 하나만 들어있을 경우, 계산을 시도한다면 그 피연산자의 값을 반환한다.")
-    void onlyOneOperandTest(Operand operand) {
+    void onlyOneOperandExistTest(Operand operand) {
         Stream<CalculationElement> onlyOneOperand = Stream.of(operand);
         Calculation calculation = Calculation.from(onlyOneOperand);
         CalculationResult calculationResult = calculation.calculate();

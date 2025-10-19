@@ -1,8 +1,9 @@
 package calculator.domain.rawinput;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import static calculator.domain.rawinput.TestElements.*;
+import static calculator.domain.rawinput.TestElements.CORRECT_CANDIDATE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 class FormulaTest {
 
     @Test
-    @DisplayName("사용자의_입력이_null_이라면_예외를_발생시킨다.")
+    @DisplayName("사용자의 입력이 null 이라면 예외를 발생시킨다.")
     void userInputIsNull() {
         String input = null;
         assertThrows(IllegalArgumentException.class, () -> Formula.from(input));
@@ -21,7 +22,7 @@ class FormulaTest {
 
     @ParameterizedTest
     @MethodSource("provideCorrectFormats")
-    @DisplayName("커스텀_구분자_지정_형식이_올바르다면_커스텀_구분자_후보를_반환해야_한다.")
+    @DisplayName("커스텀 구분자 지정 형식이 올바르다면 커스텀 구분자 후보를 반환해야 한다.")
     void correctCustomDelimiterFormat(String input) {
         Formula formula = Formula.from(input);
 
@@ -32,7 +33,7 @@ class FormulaTest {
 
     @ParameterizedTest
     @MethodSource("provideWrongFormats")
-    @DisplayName("커스텀_구분자_지정_형식이_올바르지_않다면_입력된_모든_문자열을_반환해야_한다.")
+    @DisplayName("커스텀 구분자 지정 형식이 올바르지 않다면 계산식으로 입력된 모든 문자열을 반환해야 한다.")
     void wrongCustomDelimiterFormatReturnRawInput(String input) {
         Formula formula = Formula.from(input);
 
@@ -43,7 +44,7 @@ class FormulaTest {
 
     @ParameterizedTest
     @MethodSource("provideWrongFormats")
-    @DisplayName("커스텀_구분자_지정_형식이_올바르지_않다면_커스텀_구분자_후보는_`null`_이어야_한다.")
+    @DisplayName("커스텀 구분자 지정 형식이 올바르지 않다면 커스텀 구분자 후보는 `null` 이어야한다.")
     void wrongCustomDelimiterFormat(String input) {
         Formula formula = Formula.from(input);
 

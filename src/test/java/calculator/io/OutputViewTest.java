@@ -1,6 +1,6 @@
 package calculator.io;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import calculator.dto.CalculationResponse;
 import java.io.ByteArrayOutputStream;
@@ -17,7 +17,7 @@ class OutputViewTest {
     @ParameterizedTest
     @MethodSource("provideResponses")
     @DisplayName("계산 결과 응답이 정상적인 포맷(결과 : <문자열>)으로 나와야 한다.")
-    void print_formats_result_properly(CalculationResponse calculationResponse) {
+    void printFormatsResultProperly(CalculationResponse calculationResponse) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
         System.setOut(printStream);
