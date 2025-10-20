@@ -18,6 +18,10 @@ enum TestElements {
         return CORRECT_LEFT.value + CORRECT_CANDIDATE.value + CORRECT_RIGHT.value;
     }
 
+    static String getCorrectWrapped(String value) {
+        return CORRECT_LEFT.value + value + CORRECT_RIGHT.value;
+    }
+
     String get() {
         return value;
     }
