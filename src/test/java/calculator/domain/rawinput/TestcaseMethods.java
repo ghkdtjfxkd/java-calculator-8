@@ -5,14 +5,14 @@ import static calculator.domain.rawinput.TestElements.CORRECT_LEFT;
 import static calculator.domain.rawinput.TestElements.CORRECT_RIGHT;
 import static calculator.domain.rawinput.TestElements.WRONG_LEFT;
 import static calculator.domain.rawinput.TestElements.WRONG_RIGHT;
-import static calculator.domain.rawinput.TestElements.getCorrectFormat;
 
+import calculator.support.ConsoleInputCharacter;
 import java.util.stream.Stream;
 
 class TestcaseMethods {
 
     static Stream<String> provideCorrectFormats() {
-        String correctFormat = getCorrectFormat();
+        String correctFormat = TestElements.getCorrectFormat();
         return Stream.of(
                 correctFormat + "1,2",
                 correctFormat + "1,2,3",
@@ -23,12 +23,17 @@ class TestcaseMethods {
     }
 
     static Stream<String> provideWrongFormats() {
-        String correctFormat = getCorrectFormat();
+        String correctFormat = TestElements.getCorrectFormat();
         return Stream.of(
                 "1,2,3" + correctFormat,
                 "1" + correctFormat + "2",
                 WRONG_LEFT.get() + CORRECT_CANDIDATE.get() + CORRECT_RIGHT.get() + "1,2,3",
                 CORRECT_LEFT.get() + CORRECT_CANDIDATE.get() + WRONG_RIGHT.get() + "1,2,3"
         );
+    }
+
+    static Stream<String> provideWrappedConsoleInputCharactersByCorrectFormats() {
+        Stream<String> wrappedConsoleInputCharacters = ConsoleInputCharacter.visibleStream();
+        return wrappedConsoleInputCharacters.map(TestElements::getCorrectWrapped);
     }
 }

@@ -1,9 +1,9 @@
 package calculator.domain.tokenizing;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import calculator.domain.rawinput.Formula;
 import calculator.domain.vo.CalculationElement;
 import java.util.Collection;
 import java.util.stream.Stream;
@@ -15,14 +15,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 class TokensTest {
 
     @Test
-    @DisplayName("사용자의_입력이_null_이라면_예외를_발생시킨다.")
-    void userInputIsNullTest() {
-        String input = null;
-        assertThrows(IllegalArgumentException.class, () -> Formula.from(input));
+    @DisplayName("빈 계산식이 입력된다면 예외를 발생시키지 말아야 한다.")
+    void emptyFormulaExceptionTest() {
+        String input = "";
+        assertDoesNotThrow(() -> Tokens.from(input, Delimiters.defaults()));
     }
 
     @Test
-    @DisplayName("숫자나 구분자로 지정되지 않은 문자가 식에 포함되어 있다면 예외를 발생시켜야 한다.")
+    @DisplayName("숫자나 구분자로 지정되지 않은 문자(공백문자 \"\"제외)가 식에 포함되어 있다면 예외를 발생시켜야 한다.")
     void correctDelimiterTokenizeTest() {
         String input = "1,2,3|";
         assertThrows(IllegalArgumentException.class, () -> Tokens.from(input, Delimiters.defaults()));
@@ -61,6 +61,7 @@ class TokensTest {
 
     private static Stream<String> provideMixedNumericAndCorrectDelimiterTokens() {
         return Stream.of(
+                "",
                 "1",
                 "123456",
                 "0012,0",
